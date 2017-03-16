@@ -49,3 +49,8 @@ tags
 *.ttf
 *.woff
 
+# Generated files
+web/public/
+
+# Backend secrets
+app/backendRequest.js
