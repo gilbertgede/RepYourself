@@ -1,0 +1,169 @@
+// get the page ready
+@import (less) '~bootstrap/dist/css/bootstrap.css';
+
+@font-face {
+    font-family: 'ApercuPro';
+    src: url('../../media/apercu_regular_pro.otf');
+}
+
+@font-face {
+    font-family: 'ApercuPro-Bold';
+    src: url('../../media/apercu-bold-pro.otf');
+    // src: url('../../media/apercu-light-pro.otf');
+    // src: url('../../media/apercu-medium-pro.otf');
+    // src: url('../../media/apercu-mono-bold-pro.otf');
+    // src: url('../../media/apercu-mono-pro.otf');
+}
+
+@font-face {
+    font-family: 'font-awesome';
+    src: url('../../media/fontawesome-webfont.ttf');
+}
+
+* { outline: none; box-sizing: border-box; padding-left: 0; padding-right: 0; }
+body { padding: 0; margin: 0; }
+html, body {
+  font-family: "ApercuPro";
+  // height: 100%;
+  width: 100%;
+  min-height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  background-color: green;
+  // overflow: hidden;
+  // padding-top: 50px;
+  margin: 0 0 27px; /* bottom = footer height */
+}
+
+.root-class-style {
+  justify-content: center;
+  display: flex;
+  text-align: center;
+  vertical-align: middle;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100vw;
+  height: calc(100% - 60px);
+}
+
+.navBar {
+  min-height: 60px;
+  // width: inherit;
+}
+
+.introContainer {
+  width: inherit;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0px;
+  height: 100%;
+}
+
+.zipCodeEntry {
+  height: 50%;
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  justify-content: center;
+  text-align: center;
+  padding: 0px;
+  color: black;
+}
+
+.congress-person-table {
+  height: 100%;
+}
+
+.congress-person-row {
+  border-bottom: 1px solid #FAFAFA;
+  display: flex;
+  // height: 130px;
+}
+
+.congress-person-row-red {
+  .congress-person-row;
+  background-color: #F44336;
+}
+
+.congress-person-row-blue {
+  .congress-person-row;
+  background-color: #2196F3;
+}
+
+.congress-person-row-green {
+  .congress-person-row;
+  background-color: green;
+}
+
+.congress-person-row-pic {
+  padding: 5px;
+  height: 75px;
+  width: auto;
+  height: auto;
+  margin: auto;
+}
+
+.congress-person-pic {
+  display: block;
+  max-width: 50px;
+  max-height: 75px;
+  border-radius: 10%;
+  width: auto;
+  height: auto;
+  margin: auto;
+}
+
+.congress-person-row-name {
+  text-align: left;
+  font-size: 20px;
+  font-family: "ApercuPro-Bold";
+}
+
+.congress-person-row-party {
+  text-align: left;
+  font-size: 18px;
+}
+
+.congress-person-row-icons {
+  font-size: 36px;
+  font-family: FontAwesome;
+  text-align: justify;
+	text-align-last: justify;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.congress-person-detail-icon {
+  font-size: 36px;
+  // margin-top: 50%;
+  // height: 50%;
+  // display: block;
+  vertical-align: middle;
+  align-items: center;
+  // float: none;
+  width: auto;
+  height: auto;
+  margin: auto;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+footer {
+    background-color: orange;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 27px;
+    width: 100%;
+    overflow:hidden;
+}
