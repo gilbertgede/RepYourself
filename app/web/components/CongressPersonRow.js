@@ -12,40 +12,22 @@ export default class CongressPersonRow extends Component {
     var title = rep.isSenator == true ? "Sen." : "Rep.";
     var buttonIcons = [];
     buttonIcons.push(<span>{" "}</span>);
-    if (rep.phoneDC.split(", ")[0] != "") {
-      buttonIcons.push(<FontAwesome onClick={()=>{window.open("tel:9712850131");}} className='fa-phone' name="phone"/>);
-    } else {
-      buttonIcons.push(<FontAwesome style={{color:"lightGray"}} className='fa-phone' name="phone"/>);
-    }
-    buttonIcons.push(<span>{" "}</span>);
-    var twitter = rep.twitter.split(", ")[0]
-    if (twitter != "") {
-      buttonIcons.push(<FontAwesome onClick={()=>{window.open("http://twitter.com/" + twitter);}} className='fa-twitter' name="twitter"/>);
-    } else {
-      buttonIcons.push(<FontAwesome style={{color:"lightGray"}} className='fa-twitter' name="twitter"/>);
-    }
-    buttonIcons.push(<span>{" "}</span>);
-    var wikipedia = rep.wikipedia.split(", ")[0];
-    if (wikipedia != "") {
-      buttonIcons.push(<FontAwesome onClick={()=>{window.open(wikipedia);}} className='fa-wikipedia-w' name="wiki"/>);
-    } else {
-      buttonIcons.push(<FontAwesome style={{color:"lightGray"}} className='fa-wikipedia-w' name="wiki"/>);
-    }
-    buttonIcons.push(<span>{" "}</span>);
-    var website = rep.website.split(", ")[0];
-    if (website != "") {
-      buttonIcons.push(<FontAwesome onClick={()=>{window.open(website);}} className='fa-safari' name="web"/>);
-    } else {
-      buttonIcons.push(<FontAwesome style={{color:"lightGray"}} className='fa-safari' name="web"/>);
-    }
-    buttonIcons.push(<span>{" "}</span>);
-    var facebook = rep.facebook.split(", ")[0];
-    if (facebook != "") {
-      buttonIcons.push(<FontAwesome onClick={()=>{window.open("http://www.facebook.com/" + facebook);}} className='fa-facebook-square' name="facebook"/>);
-    } else {
-      buttonIcons.push(<FontAwesome style={{color:"lightGray"}} className='fa-facebook-official' name="facebook"/>);
-    }
-    buttonIcons.push(<span>{" "}</span>);
+    var iconList = [["phoneDC", "fa-phone", "tel:"],
+                    ["twitter", "fa-twitter", "http://twitter.com/"],
+                    ["wikipedia", "fa-wikipedia-w", ""],
+                    ["website", "fa-safari", ""],
+                    ["facebook", "fa-facebook-official", "http://www.facebook.com/"]];
+    iconList.forEach( function(item) {
+      var [prop, icon, lead] = item;
+      var val = rep[prop].split(", ")[0]
+      if (val != "") {
+        var temp = <FontAwesome onClick={()=>{window.open(lead + val);}} className={icon} name={prop} key={rep.name + prop}/>;
+      } else {
+        var temp = <FontAwesome style={{color:"lightGray"}} className={icon} name={prop} key={rep.name + prop}/>;
+      }
+      buttonIcons.push(temp);
+      buttonIcons.push(<span>{" "}</span>);
+    });
 
     return (
       <Col xs={12} sm={4} md={4} className={color}>
