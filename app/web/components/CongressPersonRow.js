@@ -33,8 +33,8 @@ export default class CongressPersonRow extends Component {
       <Col xs={12} sm={4} md={4} className={color}>
         <Col xs={11} sm={11} md={11}>
           <Row>
-            <Col xs={3} sm={3} md={3} className="congress-person-row-pic">
-              <img src={rep.image_url} className="congress-person-pic"/>
+            <Col xs={3} sm={3} md={3} className="congress-person-row-pic-container">
+              <img src={rep.image_url} className="congress-person-row-pic-image"/>
             </Col>
             <Col xs={9} sm={9} md={9}>
               <Row className="congress-person-row-name">
@@ -49,7 +49,7 @@ export default class CongressPersonRow extends Component {
             {buttonIcons}
           </Row>
         </Col>
-        <Col xs={1} sm={1} md={1} className="congress-person-detail-icon" onClick={() => {this.props.dispatch(displayDetailRep(rep));}}>
+        <Col xs={1} sm={1} md={1} className="congress-person-row-disclosure" onClick={() => {this.props.dispatch(displayDetailRep(rep));}}>
           <FontAwesome className='fa-angle-right' name="disclosure"/>
         </Col>
       </Col>
