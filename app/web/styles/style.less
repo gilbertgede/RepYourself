@@ -3,12 +3,12 @@
 
 @font-face {
     font-family: 'ApercuPro';
-    src: url('../../media/apercu_regular_pro.otf');
+    src: url('media/apercu_regular_pro.otf');
 }
 
 @font-face {
     font-family: 'ApercuPro-Bold';
-    src: url('../../media/apercu-bold-pro.otf');
+    src: url('media/apercu-bold-pro.otf');
     // src: url('../../media/apercu-light-pro.otf');
     // src: url('../../media/apercu-medium-pro.otf');
     // src: url('../../media/apercu-mono-bold-pro.otf');
@@ -17,44 +17,309 @@
 
 @font-face {
     font-family: 'font-awesome';
-    src: url('../../media/fontawesome-webfont.ttf');
+    src: url('media/fontawesome-webfont.ttf');
 }
 
 * { outline: none; box-sizing: border-box; padding-left: 0; padding-right: 0; }
 body { padding: 0; margin: 0; }
 html, body {
   font-family: "ApercuPro";
-  // height: 100%;
-  width: 100%;
-  min-height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  color: white;
-  background-color: black;
-  // overflow: hidden;
-  // padding-top: 50px;
-  margin: 0 0 27px; /* bottom = footer height */
+  background: #e0e0e0;
 }
 
 .root-class-style {
-  justify-content: center;
-  display: flex;
-  text-align: center;
-  vertical-align: middle;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100vw;
-  height: calc(100% - 60px);
+
 }
 
 .navBar {
-  min-height: 60px;
   background-color: #F44336;
-  margin-bottom: 15px;
+  border: 0px;
   // width: inherit;
 }
+
+.navbar-nav > li > a {
+  color: #fff!important;
+  padding-top: 15px;
+}
+
+.navbar > .container-fluid {
+  height: 100%;
+}
+
+.navbar > .container-fluid > .btn {
+  color: #fff!important;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.list-container {
+  box-sizing: border-box;
+  margin: 50px auto;
+  padding: 1px 0% 1px;
+  width: 100%;
+  border-bottom: 0px solid #EEE;
+  min-height: calc(100vh-100px);
+}
+
+.list-container:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.flex-card-list {
+  margin: 0.5em 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  list-style-type: disc;
+  list-style-type: disc;
+  -webkit-margin-before: 0.5em;
+  -webkit-margin-after: 0.5em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  max-width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.flex-card-list li {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  list-style: none;
+  box-sizing: border-box;
+  text-align: -webkit-match-parent;
+  padding: 0 0.5em;
+}
+
+.flex-card {
+  color: #fff;
+  border-radius: 5px;
+  margin-bottom: 0.5em;
+  padding: 1em;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-transition: background .3s ease;
+  transition: background .3s ease;
+  width: 100%;
+}
+
+.blueCard {
+  .flex-card;
+  background: #2196F3;
+}
+
+.redCard {
+  .flex-card;
+  background: #F44336;
+}
+
+.greenCard {
+  .flex-card;
+  background: #52DF39;
+}
+
+.purpleCard {
+  .flex-card;
+  background: #A921F3;
+}
+
+.flex-card-stuff {
+  display: inline-flex;
+  height: 120px;
+  padding: 0em 0;
+  margin: 1em 0 0em;
+}
+
+.flex-card-stuff-img {
+  width: 33%;
+  max-height: 120px;
+  margin: 0;
+  padding: 0;
+  border-radius: 5px;
+  border-radius: 5px;
+  border: 4px solid rgba(0,0,0,0.31);
+  // vertical-align: middle;
+  // text-align: center;
+}
+
+.flex-card-stuff-img img {
+  height: 100%;
+  max-width: 100%;
+  margin: auto;
+  display: flex;
+  align-self: center;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.flex-card-actions {
+  font-size: 3.5em;
+  // height: auto;
+  // max-width: 100%;
+  flex:1 0 auto; /* We have to add a basis for IE10/11 */
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 0 auto;
+  -ms-flex: 1 0 auto;
+  width: 66%;
+  text-align: left;
+  background: rgba(0,0,0,0.31);
+  border-radius: 5px;
+  display: inline-block;
+  padding: 0.25em .25em;
+  margin-left: .25em;
+  text-decoration: none;
+}
+
+.flex-card-content {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 auto;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.flex-card-content h1,
+.flex-card-content h2,
+.flex-card-content h3,
+.flex-card-content h4 {
+  text-align: left;
+  background: rgba(0,0,0,0.31);
+  border-radius: 5px;
+  display: block;
+  padding: 0.5em .75em;
+  margin: 0;
+  text-decoration: none;
+}
+
+.flex-card-content p {
+	flex:1 0 auto; /* We have to add a basis for IE10/11 */
+  margin: 1em 0 0;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 0 auto;
+  -ms-flex: 1 0 auto;
+  text-align: left;
+  background: rgba(0,0,0,0.31);
+  border-radius: 5px;
+  display: block;
+  padding: 0.5em .75em;
+  text-decoration: none;
+}
+
+.flex-card-button {
+    text-align: center;
+    background: rgba(0,0,0,0.31);
+    border-radius: 5px;
+    color: #fff;
+    display: block;
+    padding: 1em .75em;
+    margin: 1em 0 0;
+    text-decoration: none;
+}
+
+.flex-card-multi-button {
+    text-align: center;
+    background: rgba(0,0,0,0.31);
+    border-radius: 5px;
+    color: #fff;
+    display: block;
+    padding: 0.5em .375em;
+    margin: 1em 0 0;
+    text-decoration: none;
+}
+
+.flex-card-form {
+    text-align: center;
+    background: rgba(0,0,0,0.31);
+    border-radius: 5px;
+    color: #000;
+    display: block;
+    padding: 1em .75em;
+    text-decoration: none;
+    margin: 1em 0 0;
+}
+
+/* Code to adjust the layout to 2 cards per row */
+@media all and (min-width:44em) {
+	/* Float layout */
+	.flex-card-list li {
+		width: 50%;
+	}
+}
+
+@media all and (min-width:66em) {
+	/* common to flex and non-flex */
+	.flex-card-list li {
+		width: 33.33%;
+    -webkit-transition: width .4s ease-in-out, -webkit-box-flex .4s ease-in-out;
+    -webkit-transition: width .4s ease-in-out, -webkit-flex .4s ease-in-out;
+    transition: width .4s ease-in-out, -webkit-box-flex .4s ease-in-out;
+    transition: width .4s ease-in-out, -ms-flex .4s ease-in-out;
+    transition: width .4s ease-in-out, flex .4s ease-in-out;
+	}
+}
+
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    border-radius: 5px;
+    border: 0px;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+    border-radius: 5px;
+    border: 0px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .introContainer {
   width: inherit;
@@ -164,14 +429,6 @@ html, body {
   border-left: 1px solid #FAFAFA;
 }
 
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-input[type="number"] {
-    -moz-appearance: textfield;
-}
 
 footer {
     background-color: #2196F3;

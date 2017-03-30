@@ -20,11 +20,11 @@ export default class ZipCodeEntry extends Component {
       <Row>
         <div className="introContainer">
           <h1>Welcome to RepYourself.org!</h1>
-          <p>Tell us your zip code to be matched with your elected representatives!</p>
+          <p>Tell us your ZIP Code to be matched with your elected representatives!</p>
           <div className="zipCodeEntry">
             <form>
               <label>
-                <input type="number" size="5" pattern="\d*" placeholder="Zip Code" value={this.state.value} style={{textAlign: "center"}} onChange={this.handleChange} />
+                <input type="number" size="5" pattern="\d*" placeholder="ZIP Code" value={this.state.value} style={{textAlign: "center"}} onChange={this.handleChange} />
               </label>
             </form>
           </div>

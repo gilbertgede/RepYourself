@@ -1,8 +1,16 @@
 import { ACTIONS, SECTIONS, } from '../constants/Constants';
 import { getRepsFromZip, } from '../backendRequest';
 
-export function switchedSection(newSection) {
-  return { type: ACTIONS.SWITCHED_SECTION, data: newSection };
+export function addedCard(newCardType, newCardData) {
+  return { type: ACTIONS.ADDED_CARD, data: {newCardType: newCardType, newCardData: newCardData} };
+}
+
+export function removedCard(oldCardType, oldCardData) {
+  return { type: ACTIONS.REMOVED_CARD, data: {oldCardType: oldCardType, oldCardData: oldCardData} };
+}
+
+export function replacedCard(oldCard, newCard) {
+  return { type: ACTIONS.REPLACED_CARD, data: {oldCard: oldCard, newCard: newCard} };
 }
 
 export function enteredZipCode(zipCode) {
@@ -20,8 +28,4 @@ export function respondedToBadZip() {
 
 export function handleZipResponse(selectedStateDistrict) {
   return { type: ACTIONS.DISPLAY_SELECTED_REPS, data: selectedStateDistrict };
-}
-
-export function displayDetailRep(detailRep) {
-  return { type: ACTIONS.DISPLAY_DETAIL_REP, data: detailRep };
 }

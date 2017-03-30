@@ -1,87 +1,146 @@
 import clone        from 'clone';
 import assign       from 'object-assign';
-import { ACTIONS, SECTIONS, } from '../constants/Constants';
+import { ACTIONS, CARD_TYPES, } from '../constants/Constants';
+
+var equal = require('deep-equal');
 
 const initialState = {
-  section: SECTIONS.INTRO,
+  cardsTypes: [CARD_TYPES.ZIPENTER],
+  cardsDatas: [{}],
   requestOpen: false,
-  data: {
-    zipCode: '00000',
-    stateDistrict: 'NA 0',
-    reps: [],
-    detailRep: {},
-    backendResponse: {},
-  },
+  zipCode: '00000',
+  stateDistrict: 'NA 0',
+  reps: [],
+  detailReps: [],
+  backendResponse: {},
 };
 
+function addCard(typeList, dataList, inputCardType, inputCardData) {
+  switch (inputCardType) {
+  case CARD_TYPES.ZIPENTER:
+  case CARD_TYPES.ZIPERROR:
+  case CARD_TYPES.ZIPSELECT:
+    if (typeList[0] != CARD_TYPES.ZIPENTER && typeList[0] != CARD_TYPES.ZIPERROR && typeList[0] != CARD_TYPES.ZIPSELECT) {
+      typeList.splice(0, 0, inputCardType);
+      dataList.splice(0, 0, inputCardData);
+    }
+    break;
+  case CARD_TYPES.REP:
+    typeList.splice(1, 0, inputCardType);
+    dataList.splice(1, 0, inputCardData);
+    break;
+  case CARD_TYPES.ABOUT:
+    typeList.push(inputCardType);
+    dataList.push(inputCardData);
+    break;
+  default:
+    break;
+  }
+  return [typeList.slice(0), dataList.slice(0)];
+}
+
+function removeCard(typeList, dataList, removalCardType=undefined, removalCardData=undefined) {
+  var removalIndices = [];
+  for (var i=0; i<typeList.length; i++) {
+    if (removalCardType == undefined || equal(removalCardType, typeList[i])) {
+      if (removalCardData == undefined || equal(removalCardData, dataList[i])) {
+        console.log("had a match");
+        removalIndices.splice(0, 0, i);
+      }
+    }
+  }
+  for (var i of removalIndices) {
+    typeList.splice(i, 1);
+    dataList.splice(i, 1);
+  }
+  return [typeList.slice(0), dataList.slice(0)];
+}
+
+function replaceOrAddCardByType(typeList, dataList, oldCardType, newCardType, newCardData) {
+  var replaced = false;
+  for (var i=0; i<typeList.length; i++) {
+    if (equal(oldCardType, typeList[i])) {
+      typeList[i] = newCardType;
+      dataList[i] = newCardData;
+      replaced = true;
+    }
+  }
+  if (!replaced) {
+    return addCard(typeList, dataList, newCardType, newCardData);
+  }
+  else {
+    return [typeList.slice(0), dataList.slice(0)];
+  }
+}
+
+function replaceOrAddCardByData(typeList, dataList, oldCardData, newCardType, newCardData) {
+  var replaced = false;
+  for (var i=0; i<dataList.length; i++) {
+    console.log(oldCardData);
+    console.log(dataList[i]);
+    if (equal(oldCardData, dataList[i])) {
+      console.log("replaced");
+      typeList[i] = newCardType;
+      dataList[i] = newCardData;
+      replaced = true;
+    }
+  }
+  if (!replaced) {
+    return addCard(typeList, dataList, newCardType, newCardData);
+  }
+  else {
+    return [typeList.slice(0), dataList.slice(0)];
+  }
+}
+
 export default function reduce(state = initialState, action) {
+  var { cardsTypes, cardsDatas } = state;
+  var dataAssign = {};
   switch (action.type) {
   case ACTIONS.ENTERED_ZIP_START:
-    return assign({}, state, {
-      data: assign({}, state.data, {
-        zipCode: action.data,
-      }),
-      requestOpen: true,
-    });
+    dataAssign.zipCode = action.data;
+    dataAssign.requestOpen = true;
     break;
   case ACTIONS.ENTERED_ZIP_RESPONSE:
-    var newSection;
-    var dataAssign= {
-      backendResponse: action.data,
-    }
+    dataAssign.requestOpen = false;
+    dataAssign.backendResponse = action.data;
     if (Object.keys(action.data).length == 0) {
-      newSection = SECTIONS.ZIPERROR;
+      [dataAssign.cardsTypes, dataAssign.cardsDatas] = replaceOrAddCardByType(cardsTypes, cardsDatas, CARD_TYPES.ZIPENTER, CARD_TYPES.ZIPERROR, {});
       dataAssign.zipCode = '00000';
     }
     else if (Object.keys(action.data).length == 1) {
-      newSection = SECTIONS.REPS;
       for (var key in action.data) {
         dataAssign.reps = action.data[key];
         dataAssign.stateDistrict = key;
       }
+      for (var rep of dataAssign.reps) {
+        [dataAssign.cardsTypes, dataAssign.cardsDatas] = replaceOrAddCardByData(cardsTypes, cardsDatas, rep, CARD_TYPES.REP, rep);
+      }
+      [dataAssign.cardsTypes, dataAssign.cardsDatas] = removeCard(cardsTypes, cardsDatas, CARD_TYPES.ZIPENTER, undefined);
     }
     else {
-      newSection = SECTIONS.ZIPSELECT;
+      [dataAssign.cardsTypes, dataAssign.cardsDatas] = replaceOrAddCardByType(cardsTypes, cardsDatas, CARD_TYPES.ZIPENTER, CARD_TYPES.ZIPSELECT, dataAssign.backendResponse);
     }
-    return assign({}, state, {
-      requestOpen: false,
-      section: newSection,
-      data: assign({}, state.data, dataAssign),
-    });
     break;
   case ACTIONS.ZIP_ERROR:
-    return assign({}, state, {
-      section: SECTIONS.INTRO,
-      data: assign({}, state.data, {
-        zipCode: '00000',
-      }),
-    });
+    dataAssign.zipCode = '00000';
+    [dataAssign.cardsTypes, dataAssign.cardsDatas] = replaceOrAddCardByType(cardsTypes, cardsDatas, CARD_TYPES.ZIPERROR, CARD_TYPES.ZIPENTER, {});
     break;
   case ACTIONS.DISPLAY_SELECTED_REPS:
-    var reps = state.data.backendResponse[action.data];
-    return assign({}, state, {
-      section: SECTIONS.REPS,
-      data: assign({}, state.data, {
-        stateDistrict: action.data,
-        reps: reps,
-      }),
-    });
+    [dataAssign.cardsTypes, dataAssign.cardsDatas] = removeCard(cardsTypes, cardsDatas, CARD_TYPES.ZIPSELECT, undefined);
+    var reps = state.backendResponse[action.data];
+    dataAssign.stateDistrict = action.data;
+    dataAssign.reps = reps;
+    for (var rep of dataAssign.reps) {
+      [dataAssign.cardsTypes, dataAssign.cardsDatas] = replaceOrAddCardByData(cardsTypes, cardsDatas, rep, CARD_TYPES.REP, rep);
+    }
     break;
-  case ACTIONS.SWITCHED_SECTION:
-    return assign({}, state, {
-      section: action.data
-    });
+  case ACTIONS.REMOVED_CARD:
+    [dataAssign.cardsTypes, dataAssign.cardsDatas] = removeCard(cardsTypes, cardsDatas, action.data.oldCardType, action.data.oldCardData);
     break;
-  case ACTIONS.DISPLAY_DETAIL_REP:
-    return assign({}, state, {
-      section: SECTIONS.DETAILREP,
-      data: assign({}, state.data, {
-        detailRep: action.data,
-      }),
-    });
-    break;
-  default:
-    return state;
+  case ACTIONS.ADDED_CARD:
+    [dataAssign.cardsTypes, dataAssign.cardsDatas] = addCard(cardsTypes, cardsDatas, action.data.newCardType, action.data.newCardData);
     break;
   }
+  return assign({}, state, dataAssign);
 }

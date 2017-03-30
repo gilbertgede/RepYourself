@@ -1,30 +1,26 @@
 import React, { Component, PropTypes }     from 'react';
 import { Nav, Navbar, NavItem }            from 'react-bootstrap';
 import { connect }                         from 'react-redux';
-import { switchedSection }                 from '../../actions/actions';
-import { SECTIONS }                        from '../../constants/Constants';
+import { addedCard }                       from '../../actions/actions';
+import { CARD_TYPES }                      from '../../constants/Constants';
+
+var FontAwesome = require('react-fontawesome');
+
 
 class TitleBar extends Component {
   handleSelect(eventKey) {
     event.preventDefault();
-    this.props.dispatch(switchedSection(eventKey));
+    this.props.dispatch(addedCard(eventKey, {}));
   }
   render() {
     return (
-      <Navbar fixedTop inverse fluid collapseOnSelect className="navBar">
-        <Navbar.Header>
-          <Navbar.Brand>
+      <Navbar fixedTop fluid collapseOnSelect className="navBar">
+          <Navbar.Brand style={{textAlign: "left", color: "white", paddingLeft: "0", paddingTop: "15px", paddingBottom: "0"}} >
             RepYourself.org
           </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav onSelect={this.handleSelect.bind(this)}>
-            <NavItem eventKey={SECTIONS.INTRO}>Intro</NavItem>
-            <NavItem eventKey={SECTIONS.REPS}>Reps</NavItem>
-            <NavItem eventKey={SECTIONS.ABOUT}>About</NavItem>
-          </Nav>
-        </Navbar.Collapse>
+        <Nav pullRight style={{margin: "0"}} onSelect={this.handleSelect.bind(this)}>
+          <NavItem eventKey={CARD_TYPES.ZIPENTER} style={{textAlign: "right", color: "white"}}>Add Reps <FontAwesome style={{color:"white"}} className="fa-plus-square"/></NavItem>
+        </Nav>
       </Navbar>
     )
   }
