@@ -31,7 +31,8 @@ class CardList extends Component {
         displayCards.push(<ZipSelectCard backendResponse={cardsDatas[i]}/>);
         break;
       default:
-        console.log("bad default in cardComponentCreator");
+        console.log("bad default in cardComponentCreator, got type: ");
+        console.log(cardsTypes[i]);
         break;
       }
     }

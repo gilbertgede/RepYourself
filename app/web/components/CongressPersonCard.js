@@ -27,6 +27,23 @@ class CongressPersonCard extends Component {
         break;
     }
     var temp = () => {dispatch(removedCard(CARD_TYPES.REP, rep));}
+
+    var buttonIcons = [];
+    var iconList = [["phoneDC", "fa-phone", "tel:"],
+                    ["twitter", "fa-twitter", "http://twitter.com/"],
+                    ["facebook", "fa-facebook-official", "http://www.facebook.com/"]];
+    iconList.forEach( function(item) {
+      var [prop, icon, lead] = item;
+      var val = rep[prop].split(", ")[0]
+      if (val != "") {
+        var temp = <FontAwesome onClick={()=>{window.open(lead + val);}} className={icon} name={prop} key={rep.name + prop}/>;
+      } else {
+        var temp = <FontAwesome style={{color:"lightGray"}} className={icon} name={prop} key={rep.name + prop}/>;
+      }
+      buttonIcons.push(temp);
+      buttonIcons.push(<span>{" "}</span>);
+    });
+
     return (
         <li>
           <div className={cardColor}>
@@ -40,9 +57,7 @@ class CongressPersonCard extends Component {
               </div>
               <div className="flex-card-actions">
                 <h3 style={{margin: "0"}}>Contact</h3>
-                <FontAwesome style={{color:"lightGray"}} className="fa-phone"/>{" "}
-                <FontAwesome style={{color:"lightGray"}} className="fa-twitter"/>{" "}
-                <FontAwesome style={{color:"lightGray"}} className="fa-facebook-official"/>{" "}
+                {buttonIcons}
               </div>
             </div>
             {/* <div className="flex-card-content">
