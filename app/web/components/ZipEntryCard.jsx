@@ -1,9 +1,9 @@
 import React, { Component, PropTypes }       from 'react';
 import { enteredZipCode }                    from '../../actions/actions';
 import { connect }                           from 'react-redux';
-import CardXElement                          from './CardXElement';
+import CardXElement                          from './CardXElement.jsx';
 import { removedCard, }                      from '../../actions/actions';
-import { CARD_TYPES, }                   from '../../constants/Constants';
+import { CARD_TYPES, }                       from '../../constants/Constants';
 
 
 class ZipEntryCard extends Component {
@@ -42,8 +42,5 @@ class ZipEntryCard extends Component {
 ZipEntryCard.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
-
 const select = state => state;
-
-// Wrap the component to inject dispatch and state into it
 export default connect(select)(ZipEntryCard);

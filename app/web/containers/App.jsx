@@ -1,11 +1,9 @@
-import React, { Component, PropTypes } from 'react';
-import { connect }                     from 'react-redux';
-import { Grid, Row, Col }              from 'react-bootstrap';
-import ReactCSSTransitionGroup         from 'react-addons-css-transition-group'
-
-import AboutUsFooter             from '../components/AboutUsFooter';
-import TitleBar             from '../components/TitleBar';
-import CardList             from '../components/CardList';
+import React, { Component, PropTypes }  from 'react';
+import { connect }                      from 'react-redux';
+import { Grid, Row, Col }               from 'react-bootstrap';
+import AboutUsFooter                    from '../components/AboutUsFooter.jsx';
+import TitleBar                         from '../components/TitleBar.jsx';
+import CardList                         from '../components/CardList.jsx';
 
 
 class AppRepYourself extends Component {
@@ -27,8 +25,5 @@ class AppRepYourself extends Component {
 AppRepYourself.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
-
 const select = state => state;
-
-// Wrap the component to inject dispatch and state into it
 export default connect(select)(AppRepYourself);

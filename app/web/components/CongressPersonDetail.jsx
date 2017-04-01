@@ -1,14 +1,13 @@
-import React, { Component, PropTypes }                   from 'react';
-import { Grid, Row, Col }                                from 'react-bootstrap';
-import { Button }                                        from 'react-bootstrap';
-import { SECTIONS, }                                     from '../../constants/Constants';
-import { switchedSection }                               from '../../actions/actions';
-
+import React, { Component, PropTypes }               from 'react';
+import { Grid, Row, Col }                            from 'react-bootstrap';
+import { Button }                                    from 'react-bootstrap';
+import { switchedSection }                           from '../../actions/actions';
+import { SECTIONS, }                                 from '../../constants/Constants';
 
 var FontAwesome = require('react-fontawesome');
 
 
-export default class CongressPersonDetail extends Component {
+class CongressPersonDetail extends Component {
   render() {
     const { detailRep } = this.props;
     var rep = detailRep;
@@ -26,3 +25,5 @@ CongressPersonDetail.propTypes = {
   detailRep: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 }
+const select = state => state;
+export default connect(select)(CongressPersonDetail);

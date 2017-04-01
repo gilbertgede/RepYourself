@@ -1,15 +1,13 @@
 import React, { Component, PropTypes }   from 'react';
 import { connect }                       from 'react-redux';
-
-import { ACTIONS, CARD_TYPES, }         from '../../constants/Constants';
-
-import CongressPersonCard           from '../components/CongressPersonCard';
-import ZipEntryCard                 from '../components/ZipEntryCard';
-import ZipErrorCard                 from '../components/ZipErrorCard';
-import ZipSelectCard                from '../components/ZipSelectCard';
-
+import CongressPersonCard                from '../components/CongressPersonCard.jsx';
+import ZipEntryCard                      from '../components/ZipEntryCard.jsx';
+import ZipErrorCard                      from '../components/ZipErrorCard.jsx';
+import ZipSelectCard                     from '../components/ZipSelectCard.jsx';
+import { ACTIONS, CARD_TYPES, }          from '../../constants/Constants';
 
 var FontAwesome = require('react-fontawesome');
+
 
 class CardList extends Component {
   render() {
@@ -51,8 +49,5 @@ CardList.propTypes = {
   cardsDatas: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired
 }
-
 const select = state => state;
-
-// Wrap the component to inject dispatch and state into it
 export default connect(select)(CardList);

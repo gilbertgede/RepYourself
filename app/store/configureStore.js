@@ -3,5 +3,3 @@ if (process.env.NODE_ENV !== 'development' || process.env.PLATFORM_ENV !== 'web'
 } else {
   module.exports = require('./configureStore.dev');
 }
-
-// module.exports = require('./configureStore.prod');

@@ -1,9 +1,9 @@
-import React, { Component, PropTypes }              from 'react';
-import { respondedToBadZip }                        from '../../actions/actions';
-import { connect }                     from 'react-redux';
-import CardXElement                          from './CardXElement';
-import { removedCard, }                      from '../../actions/actions';
-import { CARD_TYPES, }                   from '../../constants/Constants';
+import React, { Component, PropTypes }          from 'react';
+import { respondedToBadZip }                    from '../../actions/actions';
+import { connect }                              from 'react-redux';
+import CardXElement                             from './CardXElement.jsx';
+import { removedCard, }                         from '../../actions/actions';
+import { CARD_TYPES, }                          from '../../constants/Constants';
 
 
 class ZipErrorCard extends Component {
@@ -27,8 +27,5 @@ class ZipErrorCard extends Component {
 ZipErrorCard.propTypes = {
   dispatch: PropTypes.func.isRequired
 };
-
 const select = state => state;
-
-// Wrap the component to inject dispatch and state into it
 export default connect(select)(ZipErrorCard);

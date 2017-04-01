@@ -1,8 +1,8 @@
-import React, { Component, PropTypes }   from 'react';
-import { connect }                       from 'react-redux';
-import CardXElement                      from './CardXElement';
-import { CARD_TYPES, }                   from '../../constants/Constants';
-import { removedCard, }                  from '../../actions/actions';
+import React, { Component, PropTypes }    from 'react';
+import { connect }                        from 'react-redux';
+import CardXElement                       from './CardXElement.jsx';
+import { removedCard, }                   from '../../actions/actions';
+import { CARD_TYPES, }                    from '../../constants/Constants';
 
 var FontAwesome = require('react-fontawesome');
 
@@ -26,17 +26,17 @@ class CongressPersonCard extends Component {
         cardColor = "greenCard";
         break;
     }
-    var temp = () => {dispatch(removedCard(CARD_TYPES.REP, rep));}
-
+    var closeButton = () => {dispatch(removedCard(CARD_TYPES.REP, rep));}
+    var userRefURL = "&url=http://repyouself.org/?s=" + "123456";
     var buttonIcons = [];
-    var iconList = [["phoneDC", "fa-phone", "tel:"],
-                    ["twitter", "fa-twitter", "http://twitter.com/"],
-                    ["facebook", "fa-facebook-official", "http://www.facebook.com/"]];
+    var iconList = [["phoneDC", "fa-phone", "tel:", ""],
+                    ["twitter", "fa-twitter", "https://twitter.com/intent/tweet?text=.", "%20I%20want%20you%20to%20%2E%2E%2E%20%23repyourself" + userRefURL],
+                    ["facebook", "fa-facebook-official", "http://www.facebook.com/", ""]];
     iconList.forEach( function(item) {
-      var [prop, icon, lead] = item;
+      var [prop, icon, lead, trail] = item;
       var val = rep[prop].split(", ")[0]
       if (val != "") {
-        var temp = <FontAwesome onClick={()=>{window.open(lead + val);}} className={icon} name={prop} key={rep.name + prop}/>;
+        var temp = <FontAwesome onClick={()=>{window.open(lead + val + trail);}} className={icon} name={prop} key={rep.name + prop}/>;
       } else {
         var temp = <FontAwesome style={{color:"lightGray"}} className={icon} name={prop} key={rep.name + prop}/>;
       }
@@ -47,7 +47,7 @@ class CongressPersonCard extends Component {
     return (
         <li>
           <div className={cardColor}>
-            <CardXElement execute={temp} />
+            <CardXElement execute={closeButton} />
             <div className="flex-card-content">
               <h2 className="flex-card-title">{repName}</h2>
             </div>
@@ -74,8 +74,5 @@ CongressPersonCard.propTypes = {
   rep: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 }
-
 const select = state => state;
-
-// Wrap the component to inject dispatch and state into it
 export default connect(select)(CongressPersonCard);

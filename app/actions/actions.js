@@ -1,5 +1,5 @@
-import { ACTIONS, SECTIONS, } from '../constants/Constants';
-import { getRepsFromZip, } from '../backendRequest';
+import { ACTIONS, SECTIONS, }                   from '../constants/Constants';
+import { getRepsFromZip, }                      from '../backendRequests';
 
 export function addedCard(newCardType, newCardData) {
   return { type: ACTIONS.ADDED_CARD, data: {newCardType: newCardType, newCardData: newCardData} };

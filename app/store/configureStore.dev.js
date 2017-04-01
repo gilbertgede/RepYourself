@@ -1,23 +1,16 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk        from 'redux-thunk';
-import reducer      from '../reducers';
-import createLogger from 'redux-logger';
-import DevTools     from '../web/containers/DevTools';
-import { autoRehydrate, persistStore } from 'redux-persist'
+import { createStore, applyMiddleware, compose }      from 'redux';
+import thunk                                          from 'redux-thunk';
+import createLogger                                   from 'redux-logger';
+import reducer                                        from '../reducers/reducer';
+import DevTools                                       from '../web/containers/DevTools.jsx';
+import { autoRehydrate, persistStore }                from 'redux-persist'
 
 
-// create a store that has redux-thunk middleware, and dev tooling enabled.
-// the logger middleware logs the previous state, the action, and the next
-// state in the browser's console for easy debuggin' and instrementing the
-// dev tools allows for us to commit different actions and go forwards and
-// backwards in time using magic
-// const createDevStoreWithMiddleware = compose(
-//   applyMiddleware(thunk),
-//   applyMiddleware(createLogger()),
-//   DevTools.instrument(),
-//   autoRehydrate()
-// )(createStore);
-
+// Create a store with redux-thunk middleware, dev tooling enabled, and
+// autoRehydrate (for redux-persist). The logger middleware logs
+// the previous state, the action, and the next state to the  console;
+// instrumenting the dev tools allows for us to commit different actions,
+// and go forwards and backwards in time.
 export default function configureStore() {
   const store = createStore(
     reducer,
@@ -30,10 +23,11 @@ export default function configureStore() {
     )
   );
 
-  // enable webpack hot module replacement for reducers
+  // webpack hot module replacement for reducers
+  // NOTE: I don't know if this is actually useful for us, or how well it works
   if (module.hot) {
-    module.hot.accept('../reducers', () => {
-      const nextRootReducer = require('../reducers');
+    module.hot.accept('../reducers/reducer', () => {
+      const nextRootReducer = require('../reducers/reducer');
       store.replaceReducer(nextRootReducer);
     });
   }

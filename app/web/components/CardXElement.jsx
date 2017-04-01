@@ -1,5 +1,5 @@
-import React, { Component, PropTypes }  from 'react';
-import { connect }                       from 'react-redux';
+import React, { Component, PropTypes }          from 'react';
+import { connect }                              from 'react-redux';
 
 var FontAwesome = require('react-fontawesome');
 
@@ -20,8 +20,5 @@ class CardXElement extends Component {
 CardXElement.propTypes = {
   execute: PropTypes.func.isRequired,
 };
-
 const select = state => state;
-
-// Wrap the component to inject dispatch and state into it
 export default connect(select)(CardXElement);
