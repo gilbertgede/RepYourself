@@ -1,5 +1,6 @@
 import React, { Component, PropTypes }               from 'react';
 import { Grid, Row, Col }                            from 'react-bootstrap';
+import { connect }                                   from 'react-redux';
 import { Button }                                    from 'react-bootstrap';
 import { switchedSection }                           from '../../actions/actions';
 import { SECTIONS, }                                 from '../../constants/Constants';

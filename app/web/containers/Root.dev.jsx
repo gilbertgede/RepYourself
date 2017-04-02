@@ -1,5 +1,5 @@
 import React, { Component, PropTypes }             from 'react';
-import { Provider }                                from 'react-redux';
+import { Provider, connect }                       from 'react-redux';
 import DevTools                                    from './DevTools.jsx';
 import AppRepYourself                              from './App.jsx';
 

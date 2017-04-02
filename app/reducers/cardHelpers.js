@@ -3,7 +3,7 @@ import { ACTIONS, CARD_TYPES, } from '../constants/Constants';
 var equal = require('deep-equal');
 
 
-function addCard(typeList, dataList, inputCardType, inputCardData) {
+export function addCard(typeList, dataList, inputCardType, inputCardData) {
   switch (inputCardType) {
   case CARD_TYPES.ZIPENTER:
   case CARD_TYPES.ZIPERROR:
@@ -27,7 +27,7 @@ function addCard(typeList, dataList, inputCardType, inputCardData) {
   return [typeList.slice(0), dataList.slice(0)];
 }
 
-function removeCard(typeList, dataList, removalCardType=undefined, removalCardData=undefined) {
+export function removeCard(typeList, dataList, removalCardType=undefined, removalCardData=undefined) {
   var removalIndices = [];
   for (var i=0; i<typeList.length; i++) {
     if (removalCardType == undefined || equal(removalCardType, typeList[i])) {
@@ -44,7 +44,7 @@ function removeCard(typeList, dataList, removalCardType=undefined, removalCardDa
   return [typeList.slice(0), dataList.slice(0)];
 }
 
-function replaceOrAddCardByType(typeList, dataList, oldCardType, newCardType, newCardData) {
+export function replaceOrAddCardByType(typeList, dataList, oldCardType, newCardType, newCardData) {
   var replaced = false;
   for (var i=0; i<typeList.length; i++) {
     if (equal(oldCardType, typeList[i])) {
@@ -61,7 +61,7 @@ function replaceOrAddCardByType(typeList, dataList, oldCardType, newCardType, ne
   }
 }
 
-function replaceOrAddCardByData(typeList, dataList, oldCardData, newCardType, newCardData) {
+export function replaceOrAddCardByData(typeList, dataList, oldCardData, newCardType, newCardData) {
   var replaced = false;
   for (var i=0; i<dataList.length; i++) {
     console.log(oldCardData);
