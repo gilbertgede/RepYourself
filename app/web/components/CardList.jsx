@@ -2,6 +2,7 @@ import React, { Component, PropTypes }   from 'react';
 import { connect }                       from 'react-redux';
 import FontAwesome                       from 'react-fontawesome';
 import CongressPersonCard                from '../components/CongressPersonCard.jsx';
+import CongressPersonDetailCard          from '../components/CongressPersonDetailCard.jsx';
 import LoadingCard                       from '../components/LoadingCard.jsx';
 import ZipEntryCard                      from '../components/ZipEntryCard.jsx';
 import ZipErrorCard                      from '../components/ZipErrorCard.jsx';
@@ -25,6 +26,9 @@ class CardList extends Component {
         break;
       case CARD_TYPES.REP:
         displayCards.push(<CongressPersonCard rep={cardsDatas[i]} key={i}/>);
+        break;
+      case CARD_TYPES.DETAILREP:
+        displayCards.push(<CongressPersonDetailCard rep={cardsDatas[i]} key={i}/>);
         break;
       case CARD_TYPES.ZIPERROR:
         displayCards.push(<ZipErrorCard key={i}/>);

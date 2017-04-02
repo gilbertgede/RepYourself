@@ -9,8 +9,8 @@ export function removedCard(oldCardType, oldCardData) {
   return { type: ACTIONS.REMOVED_CARD, data: {oldCardType: oldCardType, oldCardData: oldCardData} };
 }
 
-export function replacedCard(oldCard, newCard) {
-  return { type: ACTIONS.REPLACED_CARD, data: {oldCard: oldCard, newCard: newCard} };
+export function replacedCard(oldCardType, oldCardData, newCardType, newCardData) {
+  return { type: ACTIONS.REPLACED_CARD, data: {oldCardType: oldCardType, oldCardData: oldCardData, newCardType: newCardType, newCardData: newCardData} };
 }
 
 export function enteredZipCode(zipCode) {

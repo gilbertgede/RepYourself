@@ -2,7 +2,7 @@ import React, { Component, PropTypes }    from 'react';
 import { connect }                        from 'react-redux';
 import FontAwesome                        from 'react-fontawesome';
 import CardXElement                       from './CardXElement.jsx';
-import { removedCard, }                   from '../../actions/actions';
+import { replacedCard, removedCard, }     from '../../actions/actions';
 import { CARD_TYPES, }                    from '../../constants/Constants';
 import { userMadeContact, }               from '../../backendRequests';
 import { formatPhoneNumber, }             from '../../formattingHelpers';
@@ -28,6 +28,7 @@ class CongressPersonCard extends Component {
         break;
     }
     var closeButton = () => {dispatch(removedCard(CARD_TYPES.REP, rep));};
+    var moreInfoButton = () => {dispatch(replacedCard(CARD_TYPES.REP, rep, CARD_TYPES.DETAILREP, rep));};
     var userRefURL = "&url=http://repyouself.org/?s=" + userID;
     var buttonIcons = [];
     var iconList = [["phoneDC", "fa-phone", "tel:", ""],
@@ -51,29 +52,28 @@ class CongressPersonCard extends Component {
       buttonIcons.push(temp);
       buttonIcons.push(<span key={prop + "span"}>{" "}</span>);
     });
-
     return (
-        <li>
-          <div className={cardColor}>
-            <CardXElement execute={closeButton} />
-            <div className="flex-card-content">
-              <h2 className="flex-card-title">{repName}</h2>
-            </div>
-            <div className="flex-card-stuff">
-              <div className="flex-card-stuff-img" style={{backgroundImage: `url(${imgURL})`}}>
-                {/* <img src={imgURL} /> */}
-              </div>
-              <div className="flex-card-actions">
-                <h3 style={{margin: "0"}}>Contact</h3>
-                {buttonIcons}
-              </div>
-            </div>
-            {/* <div className="flex-card-content">
-              {bioInfo}
-            </div> */}
-            <a href="#" className="flex-card-button">More Info ></a>
+      <li>
+        <div className={cardColor}>
+          <CardXElement execute={closeButton} />
+          <div className="flex-card-content">
+            <h2 className="flex-card-title">{repName}</h2>
           </div>
-        </li>
+          <div className="flex-card-stuff">
+            <div className="flex-card-stuff-img" style={{backgroundImage: `url(${imgURL})`}}>
+              {/* <img src={imgURL} /> */}
+            </div>
+            <div className="flex-card-actions">
+              <h3 style={{margin: "0"}}>Contact</h3>
+              {buttonIcons}
+            </div>
+          </div>
+          {/* <div className="flex-card-content">
+            {bioInfo}
+          </div> */}
+          <a href="#" onClick={moreInfoButton} className="flex-card-button">More Info ></a>
+        </div>
+      </li>
     );
   }
 }

@@ -19,17 +19,17 @@ class ZipEntryCard extends Component {
     }
   }
   render() {
-    var temp = () => {this.props.dispatch(removedCard(CARD_TYPES.ZIPENTER, {}))};
+    var closeButton = () => {this.props.dispatch(removedCard(CARD_TYPES.ZIPENTER, {}))};
     return (
       <li>
         <div className="purpleCard">
-          <CardXElement execute={temp} />
+          <CardXElement execute={closeButton} />
           <div className="flex-card-content">
             <h2 className="flex-card-heading">Welcome to RepYourself.org!</h2>
             <p>Tell us your zip code to be matched with your elected representatives!</p>
             <form className="flex-card-form">
               <label>
-                <input type="number" size="5" pattern="\d*" placeholder="Zip Code" value={this.state.value} style={{textAlign: "center"}} onChange={this.handleChange} />
+                <input type="number" size="5" pattern="\d*" placeholder="Zip Code" value={this.state.value} style={{textAlign: "center", width: "125px"}} onChange={this.handleChange} />
               </label>
             </form>
           </div>

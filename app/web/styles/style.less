@@ -75,44 +75,38 @@ html, body {
 
 .flex-card-list {
   margin: 0.5em 0;
-  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
+  display: flex;
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  list-style-type: disc;
-  list-style-type: disc;
-  -webkit-margin-before: 0.5em;
-  -webkit-margin-after: 0.5em;
-  -webkit-margin-start: 0px;
-  -webkit-margin-end: 0px;
-  box-sizing: border-box;
   flex-wrap: wrap;
+  -webkit-flex-pack: start;
+  -ms-flex-pack: start;
+  list-style-type: none;
+  // box-sizing: border-box;
+  // flex-flow: column wrap;
   max-width: 100%;
-  display: flex;
   // justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
+  -webkit-justify-content: center;
   justify-content: center;
 }
 
 .flex-card-list li {
   min-width: 320px;
   max-width: 320px;
-  display: -webkit-box;
+  min-height: 320px;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-flex: 0;
   -webkit-flex-grow: 0;
   -ms-flex-positive: 0;
   flex-grow: 0;
   list-style: none;
   box-sizing: border-box;
   text-align: -webkit-match-parent;
-  padding: 0 0.5em;
+  padding: 0.5em 0.5em;
 }
 
 .flex-card {
@@ -120,12 +114,9 @@ html, body {
   border-radius: 5px;
   margin-bottom: 0.5em;
   padding: 1em;
-  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -159,31 +150,25 @@ html, body {
   height: 120px;
   padding: 0em 0;
   margin: 1em 0 0em;
+  -webkit-flex: 1 0 auto;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
 }
 
 .flex-card-stuff-img {
   width: 33%;
   max-height: 120px;
-  // margin: 0;
-  // padding: 0;
   border-radius: 5px;
-  // padding: 5px;
-  // border: 4px solid rgba(0,0,0,0.31);
   display: inline-block;
   background-position: center center;
   background-size: cover;
-  // vertical-align: middle;
-  // text-align: center;
 }
 
 .flex-card-actions {
   font-size: 3.5em;
-  // height: auto;
-  // max-width: 100%;
-  flex:1 0 auto; /* We have to add a basis for IE10/11 */
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 auto;
-  -ms-flex: 1 0 auto;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex:0 0 auto;
   width: 66%;
   text-align: left;
   background: rgba(0,0,0,0.31);
@@ -195,16 +180,12 @@ html, body {
 }
 
 .flex-card-content {
-    display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-flex: 1;
     -webkit-flex: 1 0 auto;
     -ms-flex: 1 0 auto;
     flex: 1 0 auto;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
@@ -224,11 +205,10 @@ html, body {
 }
 
 .flex-card-content p {
-	flex:1 0 auto; /* We have to add a basis for IE10/11 */
   margin: 1em 0 0;
-  -webkit-box-flex: 1;
   -webkit-flex: 1 0 auto;
   -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
   text-align: left;
   background: rgba(0,0,0,0.31);
   border-radius: 5px;
@@ -251,11 +231,13 @@ html, body {
 .flex-card-button:hover, .flex-card-button:focus, .flex-card-button:active {
   color: #FFFFFF;
   text-decoration: none;
+  background: rgba(0,0,0,0.31);
 }
 
 .flex-card-button a:hover, .flex-card-button a:focus, .flex-card-button a:active {
   color: #FFFFFF;
   text-decoration: none;
+  background: rgba(0,0,0,0.31);
 }
 
 .btn:focus {
@@ -273,6 +255,18 @@ html, body {
   text-decoration: none;
 }
 
+.flex-card-multi-button:hover, .flex-card-multi-button:focus, .flex-card-multi-button:active {
+  color: #FFFFFF;
+  text-decoration: none;
+  background: rgba(0,0,0,0.31);
+}
+
+.flex-card-multi-button a:hover, .flex-card-multi-button a:focus, .flex-card-multi-button a:active {
+  color: #FFFFFF;
+  text-decoration: none;
+  background: rgba(0,0,0,0.31);
+}
+
 .flex-card-form {
     text-align: center;
     background: rgba(0,0,0,0.31);
@@ -282,6 +276,11 @@ html, body {
     padding: 1em .75em;
     text-decoration: none;
     margin: 1em 0 0;
+}
+
+.flex-card-actions > a, .flex-card-actions > a:hover, .flex-card-actions > a:focus, .flex-card-actions > a:active {
+  color: #FFFFFF;
+  text-decoration: none;
 }
 
 /* Code to adjust the layout to 2 cards per row */

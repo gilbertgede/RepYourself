@@ -51,6 +51,18 @@ export function removeCard(typeList, dataList, removalCardType=undefined, remova
   return keepOneCard(typeList, dataList);
 }
 
+export function replaceCard(typeList, dataList, oldCardType, oldCardData, newCardType, newCardData) {
+  var replaced = false;
+  for (var i=0; i<typeList.length; i++) {
+    if (equal(oldCardType, typeList[i]) && equal(oldCardData, dataList[i])) {
+      typeList[i] = newCardType;
+      dataList[i] = newCardData;
+      replaced = true;
+    }
+  }
+  return keepOneCard(typeList, dataList);
+}
+
 export function replaceOrAddCardByType(typeList, dataList, oldCardType, newCardType, newCardData) {
   var replaced = false;
   for (var i=0; i<typeList.length; i++) {

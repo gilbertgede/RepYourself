@@ -14,21 +14,21 @@ class ZipSelectCard extends Component {
       var rep = dist.filter(function(r) {
         return r.isSenator == false;
       })[0];
-      var temp = (key) => {console.log("key");console.log(key); return ()=>{this.props.dispatch(handleZipResponse(key));};};
-      districtOptions.push(<a className="flex-card-multi-button" onClick={temp(key)}>{key} - {rep.name}</a>);
+      var temp = (key) => {return ()=>{this.props.dispatch(handleZipResponse(key));};};
+      districtOptions.push(<a style={{cursor: "pointer"}} className="flex-card-multi-button" onClick={temp(key)}>{key} - {rep.name}</a>);
     }
-    var temp = () => {this.props.dispatch(removedCard(CARD_TYPES.ZIPSELECT, {}))};
+    var closeButton = () => {this.props.dispatch(removedCard(CARD_TYPES.ZIPSELECT, this.props.backendResponse))};
     return (
-        <li>
-          <div className="purpleCard">
-            <CardXElement execute={temp} />
-            <div className="flex-card-content">
-              <h3 className="flex-card-heading">Which Rep is yours?</h3>
-              <p>Looks like your ZIP Code is in multiple congressional districts. Does one of these reps look familiar?</p>
-               {districtOptions}
-            </div>
+      <li>
+        <div className="purpleCard">
+          <CardXElement execute={closeButton} />
+          <div className="flex-card-content">
+            <h3 className="flex-card-heading">Which Rep is yours?</h3>
+            <p>Looks like your ZIP Code is in multiple congressional districts. Does one of these reps look familiar?</p>
+             {districtOptions}
           </div>
-        </li>
+        </div>
+      </li>
     );
   }
 }

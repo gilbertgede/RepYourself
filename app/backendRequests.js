@@ -13,6 +13,8 @@ export function getRepsFromZip(zipCode) {
         if (err) {
           reject(err);
         } else {
+          // console.log("resolved");
+          // console.log(res.body);
           resolve(res.body);
         }
       }
@@ -41,8 +43,8 @@ export function newUser(parentID="") {
         if (err) {
           reject(err);
         } else {
-          console.log("resolved");
-          console.log(res.body);
+          // console.log("resolved");
+          // console.log(res.body);
           resolve(res.body);
         }
       }
@@ -67,8 +69,8 @@ export function userMadeContact(userID, type, repBioID) {
         if (err) {
           reject(err);
         } else {
-          console.log("resolved");
-          console.log(res.body);
+          // console.log("resolved");
+          // console.log(res.body);
           resolve(res.body);
         }
       }

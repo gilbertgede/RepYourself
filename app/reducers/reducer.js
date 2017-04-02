@@ -3,7 +3,7 @@ import assign                                             from 'object-assign';
 import { REHYDRATE, }                                     from 'redux-persist/constants'
 import { ACTIONS, CARD_TYPES, }                           from '../constants/Constants';
 import { addCard, removeCard, replaceOrAddCardByType,
-         replaceOrAddCardByData, }                        from './cardHelpers';
+         replaceOrAddCardByData, replaceCard, }           from './cardHelpers';
 
 
 const initialState = {
@@ -80,6 +80,9 @@ export default function reducer(state = initialState, action) {
     break;
   case ACTIONS.ADDED_CARD:
     [dataAssign.cardsTypes, dataAssign.cardsDatas] = addCard(cardsTypes, cardsDatas, action.data.newCardType, action.data.newCardData);
+    break;
+  case ACTIONS.REPLACED_CARD:
+    [dataAssign.cardsTypes, dataAssign.cardsDatas] = replaceCard(cardsTypes, cardsDatas, action.data.oldCardType, action.data.oldCardData, action.data.newCardType, action.data.newCardData);
     break;
   }
   return assign({}, state, dataAssign);
