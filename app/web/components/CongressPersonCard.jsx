@@ -29,11 +29,12 @@ class CongressPersonCard extends Component {
     }
     var closeButton = () => {dispatch(removedCard(CARD_TYPES.REP, rep));};
     var moreInfoButton = () => {dispatch(replacedCard(CARD_TYPES.REP, rep, CARD_TYPES.DETAILREP, rep));};
-    var userRefURL = "&url=http://repyouself.org/?s=" + userID;
+    var userRefURL = "http://repyouself.org%2F%3Fs%3D" + userID;
     var buttonIcons = [];
     var iconList = [["phoneDC", "fa-phone", "tel:", ""],
-                    ["twitter", "fa-twitter", "https://twitter.com/intent/tweet?text=.", "%20I%20want%20you%20to%20%2E%2E%2E%20%23repyourself" + userRefURL],
-                    ["facebook", "fa-facebook-official", "http://www.facebook.com/", ""]];
+                    ["twitter", "fa-twitter", "https://twitter.com/intent/tweet?text=.", "%20I%20want%20you%20to%20%2E%2E%2E%20%23repyourselforg&url=" + userRefURL],
+                    ["facebook", "fa-facebook-official", "http://www.facebook.com/dialog/feed?app_id=184683071273&description=", "%20I%20want%20you%20to%20%2E%2E%2E%20&hashtag=%23repyourselforg&link=" + userRefURL + "&redirect_uri=http%3A%2F%2Fwww.facebook.com%2F"]];
+
     iconList.forEach( function(item) {
       let [prop, icon, lead, trail] = item;
       let val = rep[prop].split(", ")[0]
@@ -45,7 +46,7 @@ class CongressPersonCard extends Component {
         userMadeContact(userID, prop, rep.bioguide_id);
       };
       if (val != "") {
-        var temp = <FontAwesome onClick={contactFunction} className={icon} name={prop} key={prop}/>;
+        var temp = <FontAwesome onClick={contactFunction} style={{cursor: "pointer"}} className={icon} name={prop} key={prop}/>;
       } else {
         var temp = <FontAwesome style={{color:"lightGray"}} className={icon} name={prop} key={prop}/>;
       }
