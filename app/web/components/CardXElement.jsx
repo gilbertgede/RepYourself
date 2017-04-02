@@ -3,13 +3,13 @@ import { connect }                              from 'react-redux';
 import FontAwesome                              from 'react-fontawesome';
 
 
-class CardXElement extends Component {
+export default class CardXElement extends Component {
   render() {
     const { execute, } = this.props;
     return (
       <div style={{textAlign: "right", width: "100%", height: "0px", margin: "0px", position: "relative", top: "-7px", left: "5px"}}>
-        <h3 style={{margin: "0"}} onClick={execute}>
-          <FontAwesome style={{color:"white"}} className="fa-times-circle"/>
+        <h3 style={{margin: "0"}}>
+          <FontAwesome onClick={execute} style={{color:"white"}} className="fa-times-circle" name="closeButton"/>
         </h3>
       </div>
     );
@@ -19,5 +19,3 @@ class CardXElement extends Component {
 CardXElement.propTypes = {
   execute: PropTypes.func.isRequired,
 };
-const select = state => state;
-export default connect(select)(CardXElement);

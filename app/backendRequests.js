@@ -20,21 +20,23 @@ export function getRepsFromZip(zipCode) {
   });
 }
 
-export function newUser(parentid=undefined) {
+export function newUser(parentID="") {
   /*
    * the backend call for this expect a JSON with: the key `parentid` [sic]
    * and the value is 6 chars of a-zA-Z0-9; or nothing. Returns a JSON with the
    * key userID and the value of 6 chars of a-zA-Z0-9.
    */
   var newUserInfo = {};
-  if (parentid != undefined) {
-    newUserInfo = {parentid: parentid};
+  if (parentID != "") {
+    newUserInfo = {parentid: parentID};
   }
   return new Promise((resolve, reject) => {
     request
       .post(backendURL + "users/")
-      .set('X-API-Key', backendAPIKey)
       .send(newUserInfo)
+      .set('X-Api-Key', backendAPIKey)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
       .end((err, res) => {
         if (err) {
           reject(err);
@@ -56,9 +58,11 @@ export function userMadeContact(userID, type, repBioID) {
    */
   return new Promise((resolve, reject) => {
     request
-      .post(backendURL + "users/" + userID + "/contacts")
-      .set('X-API-Key', backendAPIKey)
+      .post(backendURL + "users/" + userID + "/contactrecords")
       .send({ contacttype: type, contactid: repBioID })
+      .set('X-Api-Key', backendAPIKey)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
       .end((err, res) => {
         if (err) {
           reject(err);

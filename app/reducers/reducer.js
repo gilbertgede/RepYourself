@@ -1,5 +1,6 @@
 import clone                                              from 'clone';
 import assign                                             from 'object-assign';
+import { REHYDRATE, }                                     from 'redux-persist/constants'
 import { ACTIONS, CARD_TYPES, }                           from '../constants/Constants';
 import { addCard, removeCard, replaceOrAddCardByType,
          replaceOrAddCardByData, }                        from './cardHelpers';
@@ -14,12 +15,28 @@ const initialState = {
   reps: [],
   detailReps: [],
   backendResponse: {},
+  userID: '',
+  parentID: '',
 };
 
 export default function reducer(state = initialState, action) {
   var { cardsTypes, cardsDatas } = state;
   var dataAssign = {};
   switch (action.type) {
+  case REHYDRATE:
+    var incoming = action.payload;
+    if (!incoming) {
+      break;
+    }
+    delete incoming.parentID;
+    dataAssign = incoming;
+    break;
+  case ACTIONS.ADDED_USER_ID:
+    dataAssign.userID = action.data;
+    break;
+  case ACTIONS.ADDED_PARENT_ID:
+    dataAssign.parentID = action.data;
+    break;
   case ACTIONS.ENTERED_ZIP_START:
     dataAssign.zipCode = action.data;
     dataAssign.requestOpen = true;
@@ -50,13 +67,13 @@ export default function reducer(state = initialState, action) {
     [dataAssign.cardsTypes, dataAssign.cardsDatas] = replaceOrAddCardByType(cardsTypes, cardsDatas, CARD_TYPES.ZIPERROR, CARD_TYPES.ZIPENTER, {});
     break;
   case ACTIONS.DISPLAY_SELECTED_REPS:
-    [dataAssign.cardsTypes, dataAssign.cardsDatas] = removeCard(cardsTypes, cardsDatas, CARD_TYPES.ZIPSELECT, undefined);
     var reps = state.backendResponse[action.data];
     dataAssign.stateDistrict = action.data;
     dataAssign.reps = reps;
     for (var rep of dataAssign.reps) {
       [dataAssign.cardsTypes, dataAssign.cardsDatas] = replaceOrAddCardByData(cardsTypes, cardsDatas, rep, CARD_TYPES.REP, rep);
     }
+    [dataAssign.cardsTypes, dataAssign.cardsDatas] = removeCard(cardsTypes, cardsDatas, CARD_TYPES.ZIPSELECT, undefined);
     break;
   case ACTIONS.REMOVED_CARD:
     [dataAssign.cardsTypes, dataAssign.cardsDatas] = removeCard(cardsTypes, cardsDatas, action.data.oldCardType, action.data.oldCardData);

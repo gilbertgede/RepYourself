@@ -5,6 +5,8 @@ export const ACTIONS = { ENTERED_ZIP_START: 0,
                          ADDED_CARD: 4,
                          REMOVED_CARD: 5,
                          REPLACED_CARD: 6,
+                         ADDED_USER_ID: 7,
+                         ADDED_PARENT_ID: 8,
                        };
 
 export const CARD_TYPES = { ZIPENTER: 0,
@@ -12,7 +14,7 @@ export const CARD_TYPES = { ZIPENTER: 0,
                             ZIPERROR: 2,
                             ZIPSELECT: 3,
                             DETAILREP: 4,
-                            LOADING: 5, 
+                            LOADING: 5,
                           };
 
 export const CONTACT_TYPES = { CALL: 0,

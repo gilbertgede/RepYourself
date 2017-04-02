@@ -8,14 +8,10 @@ import TitleBar                         from '../components/TitleBar.jsx';
 
 class AppRepYourself extends Component {
   render() {
-    var temp = window.location.search;
-    history.pushState({}, null, "/");
     return (
       <div className="root-class-style">
         <TitleBar />
-          {/* <div className="navBar">{"   "}</div> */}
         <CardList cardsTypes={this.props.cardsTypes} cardsDatas={this.props.cardsDatas} />
-        <p>{temp}</p>
         <AboutUsFooter />
       </div>
     );
