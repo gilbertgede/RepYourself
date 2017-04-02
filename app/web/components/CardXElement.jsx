@@ -1,7 +1,6 @@
 import React, { Component, PropTypes }          from 'react';
 import { connect }                              from 'react-redux';
-
-var FontAwesome = require('react-fontawesome');
+import FontAwesome                              from 'react-fontawesome';
 
 
 class CardXElement extends Component {

@@ -1,10 +1,9 @@
 import React, { Component, PropTypes }     from 'react';
 import { Nav, Navbar, NavItem }            from 'react-bootstrap';
 import { connect }                         from 'react-redux';
+import FontAwesome                         from 'react-fontawesome';
 import { addedCard }                       from '../../actions/actions';
 import { CARD_TYPES }                      from '../../constants/Constants';
-
-var FontAwesome = require('react-fontawesome');
 
 
 class TitleBar extends Component {

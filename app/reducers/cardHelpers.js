@@ -1,7 +1,14 @@
-import { ACTIONS, CARD_TYPES, } from '../constants/Constants';
+import { ACTIONS, CARD_TYPES, }     from '../constants/Constants';
+import equal                        from 'deep-equal';
 
-var equal = require('deep-equal');
 
+function keepOneCard(typeList, dataList) {
+  if (typeList.length == 0) {
+    typeList.splice(0, 0, CARD_TYPES.ZIPENTER);
+    dataList.splice(0, 0, {});
+  }
+  return [typeList.slice(0), dataList.slice(0)];
+}
 
 export function addCard(typeList, dataList, inputCardType, inputCardData) {
   switch (inputCardType) {
@@ -24,7 +31,7 @@ export function addCard(typeList, dataList, inputCardType, inputCardData) {
   default:
     break;
   }
-  return [typeList.slice(0), dataList.slice(0)];
+  return keepOneCard(typeList, dataList);
 }
 
 export function removeCard(typeList, dataList, removalCardType=undefined, removalCardData=undefined) {
@@ -41,7 +48,7 @@ export function removeCard(typeList, dataList, removalCardType=undefined, remova
     typeList.splice(i, 1);
     dataList.splice(i, 1);
   }
-  return [typeList.slice(0), dataList.slice(0)];
+  return keepOneCard(typeList, dataList);
 }
 
 export function replaceOrAddCardByType(typeList, dataList, oldCardType, newCardType, newCardData) {
@@ -57,7 +64,7 @@ export function replaceOrAddCardByType(typeList, dataList, oldCardType, newCardT
     return addCard(typeList, dataList, newCardType, newCardData);
   }
   else {
-    return [typeList.slice(0), dataList.slice(0)];
+    return keepOneCard(typeList, dataList);
   }
 }
 
@@ -77,6 +84,6 @@ export function replaceOrAddCardByData(typeList, dataList, oldCardData, newCardT
     return addCard(typeList, dataList, newCardType, newCardData);
   }
   else {
-    return [typeList.slice(0), dataList.slice(0)];
+    return keepOneCard(typeList, dataList);
   }
 }

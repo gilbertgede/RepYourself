@@ -1,10 +1,10 @@
 import React, { Component, PropTypes }    from 'react';
 import { connect }                        from 'react-redux';
+import FontAwesome                        from 'react-fontawesome';
 import CardXElement                       from './CardXElement.jsx';
 import { removedCard, }                   from '../../actions/actions';
 import { CARD_TYPES, }                    from '../../constants/Constants';
 
-var FontAwesome = require('react-fontawesome');
 
 
 class CongressPersonCard extends Component {

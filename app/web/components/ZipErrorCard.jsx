@@ -1,10 +1,9 @@
 import React, { Component, PropTypes }          from 'react';
-import { respondedToBadZip }                    from '../../actions/actions';
 import { connect }                              from 'react-redux';
 import CardXElement                             from './CardXElement.jsx';
 import { removedCard, }                         from '../../actions/actions';
+import { respondedToBadZip }                    from '../../actions/actions';
 import { CARD_TYPES, }                          from '../../constants/Constants';
-
 
 class ZipErrorCard extends Component {
   render() {

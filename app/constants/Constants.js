@@ -12,6 +12,7 @@ export const CARD_TYPES = { ZIPENTER: 0,
                             ZIPERROR: 2,
                             ZIPSELECT: 3,
                             DETAILREP: 4,
+                            LOADING: 5, 
                           };
 
 export const CONTACT_TYPES = { CALL: 0,

@@ -1,9 +1,9 @@
 import { createStore, applyMiddleware, compose }      from 'redux';
 import thunk                                          from 'redux-thunk';
 import createLogger                                   from 'redux-logger';
+import { autoRehydrate, }                             from 'redux-persist'
 import reducer                                        from '../reducers/reducer';
 import DevTools                                       from '../web/containers/DevTools.jsx';
-import { autoRehydrate, persistStore }                from 'redux-persist'
 
 
 // Create a store with redux-thunk middleware, dev tooling enabled, and

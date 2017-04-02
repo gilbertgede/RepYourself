@@ -1,12 +1,11 @@
 import React, { Component, PropTypes }   from 'react';
 import { connect }                       from 'react-redux';
+import FontAwesome                       from 'react-fontawesome';
 import CongressPersonCard                from '../components/CongressPersonCard.jsx';
 import ZipEntryCard                      from '../components/ZipEntryCard.jsx';
 import ZipErrorCard                      from '../components/ZipErrorCard.jsx';
 import ZipSelectCard                     from '../components/ZipSelectCard.jsx';
 import { ACTIONS, CARD_TYPES, }          from '../../constants/Constants';
-
-var FontAwesome = require('react-fontawesome');
 
 
 class CardList extends Component {

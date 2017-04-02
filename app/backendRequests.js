@@ -20,12 +20,16 @@ export function getRepsFromZip(zipCode) {
   });
 }
 
-export function newUser(newUserInfo) {
+export function newUser(parentid=undefined) {
   /*
-   * the backend call for this expect a JSON with: the key `parentReferer` [sic]
+   * the backend call for this expect a JSON with: the key `parentid` [sic]
    * and the value is 6 chars of a-zA-Z0-9; or nothing. Returns a JSON with the
-   * key userID and the value of 6 chars of a-zA-Z0-9
+   * key userID and the value of 6 chars of a-zA-Z0-9.
    */
+  var newUserInfo = {};
+  if (parentid != undefined) {
+    newUserInfo = {parentid: parentid};
+  }
   return new Promise((resolve, reject) => {
     request
       .post(backendURL + "users/")
@@ -44,12 +48,17 @@ export function newUser(newUserInfo) {
   });
 }
 
-export function userMadeContact(userID, type, who) {
+export function userMadeContact(userID, type, repBioID) {
+  /*
+   * The backend call for this expect a JSON with: the `contacttype` (string
+   * of "call", "tweet", "facebook") and `contactid` (congress person's
+   * bioguide id).
+   */
   return new Promise((resolve, reject) => {
     request
       .post(backendURL + "users/" + userID + "/contacts")
       .set('X-API-Key', backendAPIKey)
-      .send({ contactType: type, contactPerson: who })
+      .send({ contacttype: type, contactid: repBioID })
       .end((err, res) => {
         if (err) {
           reject(err);
