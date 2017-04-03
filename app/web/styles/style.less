@@ -1,16 +1,6 @@
 @import (less) '~bootstrap/dist/css/bootstrap.css';
 
 @font-face {
-    font-family: 'ApercuPro';
-    src: url('media/apercu_regular_pro.otf');
-}
-
-@font-face {
-    font-family: 'ApercuPro-Bold';
-    src: url('media/apercu-bold-pro.otf');
-}
-
-@font-face {
     font-family: 'font-awesome';
     src: url('media/fontawesome-webfont.ttf');
 }
@@ -18,23 +8,42 @@
 * { outline: none; box-sizing: border-box; padding-left: 0; padding-right: 0; }
 body { padding: 0; margin: 0; }
 html, body {
-  font-family: "ApercuPro";
   background: #e0e0e0;
 }
 
 .root-class-style {
 }
 
-.dummy {
+.dummy,
+.dummy > li,
+.dummy > li:hover,
+.dummy > li:active,
+.dummy > li:focus,
+.dummy > li:visited,
+.dummy > li > a,
+.dummy > li > a:hover,
+.dummy > li > a:active,
+.dummy > li > a:visited,
+.dummy > li > a:focus {
+    background: #F44336;
+    background-color: #F44336;
+    padding-bottom: 0;
 }
 
-.dummy > li > a, .dummy > li:hover {
-  background-color: #F44336;
+.dummy2 {
+}
+
+.dummy3 {
 }
 
 .navBar {
-  background-color: #F44336;
   border: 0px;
+  min-height: 45px;
+}
+
+.navbar-brand {
+  height: 35px;
+  padding-top: 10px;
 }
 
 .navbar-nav > li > a {
@@ -50,7 +59,6 @@ html, body {
 
 .navbar > .container-fluid > .btn {
   color: #fff!important;
-  background-color: rgba(0, 0, 0, 0);
 }
 
 .navbar > .container-fluid > span {
@@ -61,18 +69,38 @@ html, body {
   margin-left: 0;
 }
 
-.navbar-nav > li,
-.navbar-nav > li > ul,
-.navbar-nav > li > ul > li,
-.navbar-nav > li > ul > li > a,
-.navbar-nav > li > ul > li > a > .btn-default {
+.dummy3.navbar-nav > li,
+.dummy3.navbar-nav > li > ul,
+.dummy3.navbar-nav > li > ul > li,
+.dummy3.navbar-nav > li > ul > li > a,
+.dummy3.navbar-nav > li > ul > li > a > .btn-default {
   background: #2196F3;
   color: #fff;
-  margin-right: 10px;
 }
 
-.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+.dummy3 > div > div > ul > li > a {
+  background: #2196F3;
+  color: #fff;
+}
+
+.dummy3 > div > div > ul > li > a,
+.dummy3 > div > div > ul > li > a:active,
+.dummy3 > div > div > ul > li > a:hover,
+.dummy3 > div > div > ul > li > a:focus {
   background: #1186E3;
+  color: #fff;
+}
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:active,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  background: #1186E3;
+}
+
+.navbar-nav > li > ul > li > a {
+  background: #2196F3;
+  color: #fff;
 }
 
 .navbar-nav > li > ul > li > a:hover {
@@ -90,15 +118,16 @@ ul.nav.navbar-nav.navbar-right > li.dropdown > a.dropdown-toggle {
 
 .dropdown-menu {
   padding: 0;
+  border: 0;
 }
 
 .list-container {
   box-sizing: border-box;
-  margin: 50px auto;
+  margin: 45px auto;
   padding: 1px 0% 1px;
   width: 100%;
   border-bottom: 0px solid #EEE;
-  min-height: calc(100vh-100px);
+  min-height: calc(100vh-85px);
 }
 
 .list-container:after {
@@ -316,26 +345,26 @@ ul.nav.navbar-nav.navbar-right > li.dropdown > a.dropdown-toggle {
   color: #FFFFFF;
   text-decoration: none;
 }
-
-/* Code to adjust the layout to 2 cards per row */
-@media all and (min-width:44em) {
-	/* Float layout */
-	.flex-card-list li {
-		width: 50%;
-	}
-}
-
-@media all and (min-width:66em) {
-	/* common to flex and non-flex */
-	.flex-card-list li {
-		width: 33.33%;
-    -webkit-transition: width .4s ease-in-out, -webkit-box-flex .4s ease-in-out;
-    -webkit-transition: width .4s ease-in-out, -webkit-flex .4s ease-in-out;
-    transition: width .4s ease-in-out, -webkit-box-flex .4s ease-in-out;
-    transition: width .4s ease-in-out, -ms-flex .4s ease-in-out;
-    transition: width .4s ease-in-out, flex .4s ease-in-out;
-	}
-}
+//
+// /* Code to adjust the layout to 2 cards per row */
+// @media all and (min-width:44em) {
+// 	/* Float layout */
+// 	.flex-card-list li {
+// 		width: 50%;
+// 	}
+// }
+//
+// @media all and (min-width:66em) {
+// 	/* common to flex and non-flex */
+// 	.flex-card-list li {
+// 		width: 33.33%;
+//     -webkit-transition: width .4s ease-in-out, -webkit-box-flex .4s ease-in-out;
+//     -webkit-transition: width .4s ease-in-out, -webkit-flex .4s ease-in-out;
+//     transition: width .4s ease-in-out, -webkit-box-flex .4s ease-in-out;
+//     transition: width .4s ease-in-out, -ms-flex .4s ease-in-out;
+//     transition: width .4s ease-in-out, flex .4s ease-in-out;
+// 	}
+// }
 
 
 input[type="number"]::-webkit-outer-spin-button,

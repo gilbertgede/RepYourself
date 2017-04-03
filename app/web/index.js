@@ -23,7 +23,6 @@ export const persistor = persistStore(store, {}, ()=>{
   let state = store.getState();
   if (state.userID == "") {
     newUser(state.parentID).then(data=>{
-      console.log(data);
       store.dispatch({type: ACTIONS.ADDED_USER_ID, data: data.id})
     });
   }

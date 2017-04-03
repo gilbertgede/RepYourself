@@ -1,5 +1,5 @@
 import React, { Component, PropTypes }                                 from 'react';
-import { MenuItem, Nav, Navbar, NavItem, NavDropdown,
+import { MenuItem, ButtonToolbar, Navbar, DropdownButton,
          OverlayTrigger, Popover, Button, }                            from 'react-bootstrap';
 import FontAwesome                                                     from 'react-fontawesome';
 import { persistor, store }                                            from '../index';
@@ -18,16 +18,14 @@ export default class AboutUsFooter extends Component {
     const emailOpen = ()=>{window.open("mailto:feedback@repyourself.org?Subject=Feedback for RepYourself.Org");};
     const gearIcon = <FontAwesome style={{color:"white", fontSize:"22px"}} className="fa-cog" name="settings"/>;
     return (
-      <Navbar fluid collapseOnSelect fixedBottom className="navBar" style={{maxHeight: "40px", minHeight: "40px", backgroundColor: "#2196F3", textAlign:"right"}}>
+      <Navbar fluid collapseOnSelect fixedBottom className="navBar dummy3" style={{maxHeight: "40px", minHeight: "40px", backgroundColor: "#2196F3", textAlign:"right"}}>
         <OverlayTrigger rootClose container={this} trigger="click" placement="top" overlay={popoverTop}>
-          <Button title="About RepYourself.Org" style={{margin: "0%", height: "40px", borderRadius: "0", border: "0"}}>About</Button>
+          <Button title="About RepYourself.Org" style={{margin: "0%", height: "40px", borderRadius: "0", border: "0", backgroundColor: "#2196F3"}}>About</Button>
         </OverlayTrigger>
-        <Nav pullRight>
-          <NavDropdown title={gearIcon}>
-            <MenuItem onClick={emailOpen}><FontAwesome style={{fontSize:"22px"}} className="fa-envelope-square"/>{'  '}Email Us</MenuItem>
-            <MenuItem onClick={()=>{persistor.purge();location.reload();}}><FontAwesome style={{fontSize:"22px"}} className="fa-refresh"/>{'  '}Reload Info</MenuItem>
-          </NavDropdown>
-        </Nav>
+        <DropdownButton noCaret pullRight title={gearIcon} className="dummy2" style={{border: "0", background: "#2196F3"}}>
+          <MenuItem style={{border: "0", background: "#2196F3"}} onClick={emailOpen}><FontAwesome style={{fontSize:"22px"}} className="fa-envelope-square"/>{'  '}Email Us</MenuItem>
+          <MenuItem style={{border: "0", background: "#2196F3"}} onClick={()=>{persistor.purge();location.reload();}}><FontAwesome style={{fontSize:"22px"}} className="fa-refresh"/>{'  '}Reload Info</MenuItem>
+        </DropdownButton>
       </Navbar>
     )
   }

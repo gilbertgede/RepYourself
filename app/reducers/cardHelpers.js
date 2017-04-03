@@ -39,7 +39,6 @@ export function removeCard(typeList, dataList, removalCardType=undefined, remova
   for (var i=0; i<typeList.length; i++) {
     if (removalCardType == undefined || equal(removalCardType, typeList[i])) {
       if (removalCardData == undefined || equal(removalCardData, dataList[i])) {
-        console.log("had a match");
         removalIndices.splice(0, 0, i);
       }
     }
@@ -83,10 +82,7 @@ export function replaceOrAddCardByType(typeList, dataList, oldCardType, newCardT
 export function replaceOrAddCardByData(typeList, dataList, oldCardData, newCardType, newCardData) {
   var replaced = false;
   for (var i=0; i<dataList.length; i++) {
-    console.log(oldCardData);
-    console.log(dataList[i]);
     if (equal(oldCardData, dataList[i])) {
-      console.log("replaced");
       typeList[i] = newCardType;
       dataList[i] = newCardData;
       replaced = true;

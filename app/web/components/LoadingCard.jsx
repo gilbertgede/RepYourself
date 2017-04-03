@@ -8,11 +8,9 @@ import { CARD_TYPES, }                       from '../../constants/Constants';
 
 class LoadingCard extends Component {
   render() {
-    var temp = () => {this.props.dispatch(removedCard(CARD_TYPES.LOADING, {}))};
     return (
       <li>
         <div className="purpleCard">
-          <CardXElement execute={temp} />
           <div className="flex-card-content">
             <h2 className="flex-card-heading">Loading</h2>
             <p>RepYourself.org will be ready in a few seconds...</p>
