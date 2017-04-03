@@ -25,6 +25,13 @@ html, body {
 .root-class-style {
 }
 
+.dummy {
+}
+
+.dummy > li > a, .dummy > li:hover {
+  background-color: #F44336;
+}
+
 .navBar {
   background-color: #F44336;
   border: 0px;
@@ -54,8 +61,34 @@ html, body {
   margin-left: 0;
 }
 
+.navbar-nav > li,
+.navbar-nav > li > ul,
+.navbar-nav > li > ul > li,
+.navbar-nav > li > ul > li > a,
+.navbar-nav > li > ul > li > a > .btn-default {
+  background: #2196F3;
+  color: #fff;
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+  background: #1186E3;
+}
+
+.navbar-nav > li > ul > li > a:hover {
+  background: #1186E3;
+  color: #fff;
+}
+
+ul.nav.navbar-nav.navbar-right > li.dropdown > a.dropdown-toggle {
+  padding-top: 9px;
+}
+
 .popover.top .arrow {
   visibility:hidden;
+}
+
+.dropdown-menu {
+  padding: 0;
 }
 
 .list-container {

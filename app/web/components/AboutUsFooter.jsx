@@ -1,7 +1,10 @@
-import React, { Component, PropTypes }                               from 'react';
-import { Nav, Navbar, NavItem, OverlayTrigger, Popover, Button }     from 'react-bootstrap';
+import React, { Component, PropTypes }                                 from 'react';
+import { MenuItem, Nav, Navbar, NavItem, NavDropdown,
+         OverlayTrigger, Popover, Button, }                            from 'react-bootstrap';
+import FontAwesome                                                     from 'react-fontawesome';
+import { persistor, store }                                            from '../index';
+import { ACTIONS, }                                                    from '../../constants/Constants';
 
-var FontAwesome = require('react-fontawesome');
 
 export default class AboutUsFooter extends Component {
   render() {
@@ -13,12 +16,18 @@ export default class AboutUsFooter extends Component {
       </Popover>
     );
     const emailOpen = ()=>{window.open("mailto:feedback@repyourself.org?Subject=Feedback for RepYourself.Org");};
+    const gearIcon = <FontAwesome style={{color:"white", fontSize:"22px"}} className="fa-cog" name="settings"/>;
     return (
-      <Navbar fluid collapseOnSelect fixedBottom className="navBar" style={{height: "34px", backgroundColor: "#2196F3", display: "inline", float:"right", alignItems:"right"}}>
+      <Navbar fluid collapseOnSelect fixedBottom className="navBar" style={{maxHeight: "40px", minHeight: "40px", backgroundColor: "#2196F3", textAlign:"right"}}>
         <OverlayTrigger rootClose container={this} trigger="click" placement="top" overlay={popoverTop}>
-          <Button title="About RepYourself.Org" style={{margin: "0%", height: "100%", borderRadius: "0", border: "0"}}>About</Button>
+          <Button title="About RepYourself.Org" style={{margin: "0%", height: "40px", borderRadius: "0", border: "0"}}>About</Button>
         </OverlayTrigger>
-          <Button title="Feedback" onClick={emailOpen} style={{margin: "0%", height: "100%", borderRadius: "0", border: "0"}}><FontAwesome style={{color:"white", fontSize:"22px"}} className="fa-envelope-square"/></Button>
+        <Nav pullRight>
+          <NavDropdown title={gearIcon}>
+            <MenuItem onClick={emailOpen}><FontAwesome style={{fontSize:"22px"}} className="fa-envelope-square"/>{'  '}Email Us</MenuItem>
+            <MenuItem onClick={()=>{persistor.purge();location.reload();}}><FontAwesome style={{fontSize:"22px"}} className="fa-refresh"/>{'  '}Reload Info</MenuItem>
+          </NavDropdown>
+        </Nav>
       </Navbar>
     )
   }

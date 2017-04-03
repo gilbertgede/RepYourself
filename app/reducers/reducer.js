@@ -23,6 +23,8 @@ export default function reducer(state = initialState, action) {
   var { cardsTypes, cardsDatas } = state;
   var dataAssign = {};
   switch (action.type) {
+  case ACTIONS.RESET:
+    return initialState;
   case REHYDRATE:
     var incoming = action.payload;
     if (!incoming) {

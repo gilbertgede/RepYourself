@@ -19,7 +19,7 @@ history.pushState({}, null, "/");
 const store = configureStore();
 store.dispatch({type: ACTIONS.ADDED_PARENT_ID, data: temp })
 
-persistStore(store, {}, ()=>{
+export const persistor = persistStore(store, {}, ()=>{
   let state = store.getState();
   if (state.userID == "") {
     newUser(state.parentID).then(data=>{
@@ -28,8 +28,6 @@ persistStore(store, {}, ()=>{
     });
   }
 });
-console.log("store");
-console.log(store);
 
 const rootElement = document.getElementById('root');
 render( <Root store={store} />, rootElement );

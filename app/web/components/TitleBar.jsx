@@ -10,10 +10,10 @@ class TitleBar extends Component {
   render() {
     return (
       <Navbar fixedTop fluid collapseOnSelect className="navBar">
-          <Navbar.Brand style={{textAlign: "left", color: "white", paddingTop: "15px", paddingBottom: "0"}} >
-            RepYourself.org
-          </Navbar.Brand>
-        <Nav pullRight style={{margin: "0"}}>
+        <Navbar.Brand style={{textAlign: "left", color: "white", paddingTop: "15px", paddingBottom: "0"}} >
+          RepYourself.org
+        </Navbar.Brand>
+        <Nav className="dummy" pullRight style={{margin: "0"}}>
           <NavItem style={{textAlign: "right", color: "white"}} onClick={()=>{this.props.dispatch(addedCard(CARD_TYPES.ZIPENTER, {}));}}>Add Reps <FontAwesome style={{color:"white"}} className="fa-plus-square" name="addButton"/></NavItem>
         </Nav>
       </Navbar>
