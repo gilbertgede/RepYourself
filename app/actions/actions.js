@@ -1,16 +1,20 @@
 import { ACTIONS, SECTIONS, }                   from '../constants/Constants';
 import { getRepsFromZip, }                      from '../backendRequests';
 
-export function addedCard(newCardType, newCardData) {
-  return { type: ACTIONS.ADDED_CARD, data: {newCardType: newCardType, newCardData: newCardData} };
+export function addedCard(newCard) {
+  return { type: ACTIONS.ADDED_CARD, data: {newCard: newCard} };
 }
 
-export function removedCard(oldCardType, oldCardData) {
-  return { type: ACTIONS.REMOVED_CARD, data: {oldCardType: oldCardType, oldCardData: oldCardData} };
+export function removedCard(oldCard) {
+  return { type: ACTIONS.REMOVED_CARD, data: {oldCard: oldCard} };
 }
 
-export function replacedCard(oldCardType, oldCardData, newCardType, newCardData) {
-  return { type: ACTIONS.REPLACED_CARD, data: {oldCardType: oldCardType, oldCardData: oldCardData, newCardType: newCardType, newCardData: newCardData} };
+// export function replacedCard(oldCard, newCard) {
+//   return { type: ACTIONS.REPLACED_CARD, data: {oldCard: oldCard, newCard: newCard} };
+// }
+
+export function modifiedCard(oldCard, newCardModifier) {
+  return { type: ACTIONS.UPDATED_CARD_MODIFIER, data: {oldCard: oldCard, newCardModifier: newCardModifier} };
 }
 
 export function enteredZipCode(zipCode) {

@@ -1,19 +1,24 @@
 import React, { Component, PropTypes }  from 'react';
 import { connect }                      from 'react-redux';
-import { Grid, Row, Col }               from 'react-bootstrap';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AboutUsFooter                    from '../components/AboutUsFooter.jsx';
 import CardList                         from '../components/CardList.jsx';
-import TitleBar                         from '../components/TitleBar.jsx';
 
 
 class AppRepYourself extends Component {
   render() {
+    const theme = getMuiTheme();
+    theme.paper.color = "white";
+    theme.paper.backgroundColor = "#808E95";
+    theme.toolbar.backgroundColor = "#808E95";
     return (
-      <div className="root-class-style">
-        <TitleBar />
-        <CardList cardsTypes={this.props.cardsTypes} cardsDatas={this.props.cardsDatas} />
-        <AboutUsFooter />
-      </div>
+      <MuiThemeProvider muiTheme={theme}>
+        <div className="root-class-style">
+          <CardList cards={this.props.cards} />
+          <AboutUsFooter />
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

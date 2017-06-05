@@ -22,19 +22,18 @@ export function getRepsFromZip(zipCode) {
   });
 }
 
-export function newUser(parentID="") {
+export function newUser(userID, parentID="") {
   /*
-   * the backend call for this expect a JSON with: the key `parentid` [sic]
-   * and the value is 6 chars of a-zA-Z0-9; or nothing. Returns a JSON with the
-   * key userID and the value of 6 chars of a-zA-Z0-9.
+   * the backend call for this expect a JSON with:
+   * {trialID: trialID, parentid: parentID}, where trialID and parentID have
+   * been generated with shortid.
+   * Returns a JSON with the key userID and the value conforming to shortid.
    */
   var newUserInfo = {};
-  if (parentID != "") {
-    newUserInfo = {parentid: parentID};
-  }
+  newUserInfo = {"userID": userID, "parentid": parentID};
   return new Promise((resolve, reject) => {
     request
-      .post(backendURL + "users/")
+      .post(backendURL + "users")
       .send(newUserInfo)
       .set('X-Api-Key', backendAPIKey)
       .set('Content-Type', 'application/json')
@@ -45,7 +44,7 @@ export function newUser(parentID="") {
         } else {
           // console.log("resolved");
           // console.log(res.body);
-          resolve(res.body);
+          resolve(res.body.userID);
         }
       }
     );
@@ -58,10 +57,11 @@ export function userMadeContact(userID, type, repBioID) {
    * of "call", "tweet", "facebook") and `contactid` (congress person's
    * bioguide id).
    */
+  var newContactInfo = { "contacttype": type, "contactid": repBioID };
   return new Promise((resolve, reject) => {
     request
       .post(backendURL + "users/" + userID + "/contactrecords")
-      .send({ contacttype: type, contactid: repBioID })
+      .send(newContactInfo)
       .set('X-Api-Key', backendAPIKey)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')

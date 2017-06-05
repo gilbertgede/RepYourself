@@ -5,11 +5,10 @@ import Root             from './containers/Root';
 import configureStore   from '../store/configureStore';
 import { ACTIONS, }     from '../constants/Constants';
 import { newUser, }     from '../backendRequests';
+import shortid          from 'shortid';
 
 
-
-
-require('bootstrap/dist/css/bootstrap.css');
+// require('bootstrap/dist/css/bootstrap.css');
 require('font-awesome/css/font-awesome.css');
 require('./styles/style.less');
 
@@ -22,8 +21,10 @@ store.dispatch({type: ACTIONS.ADDED_PARENT_ID, data: temp })
 export const persistor = persistStore(store, {}, ()=>{
   let state = store.getState();
   if (state.userID == "") {
-    newUser(state.parentID).then(data=>{
-      store.dispatch({type: ACTIONS.ADDED_USER_ID, data: data.id})
+    var newUserID = shortid.generate();
+    store.dispatch({type: ACTIONS.ADDED_USER_ID, data: newUserID})
+    newUser(newUserID, state.parentID).then(data=>{
+      store.dispatch({type: ACTIONS.ADDED_USER_ID, data: data})
     });
   }
 });

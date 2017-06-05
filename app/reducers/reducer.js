@@ -1,14 +1,14 @@
 import clone                                              from 'clone';
 import assign                                             from 'object-assign';
 import { REHYDRATE, }                                     from 'redux-persist/constants'
-import { ACTIONS, CARD_TYPES, }                           from '../constants/Constants';
-import { addCard, removeCard, replaceOrAddCardByType,
-         replaceOrAddCardByData, replaceCard, }           from './cardHelpers';
+import { ACTIONS, CARD_TYPES, CARD_MODIFIERS, }           from '../constants/Constants';
+import { addCard, removeCard, replaceCard,
+         updateCardData, updateCardModifier,
+         findCardsByType, }                               from './cardHelpers';
 
 
 const initialState = {
-  cardsTypes: [CARD_TYPES.ZIPENTER],
-  cardsDatas: [{}],
+  cards: [{type: CARD_TYPES.ADDREPZIP, data: {}, modifier: CARD_MODIFIERS[CARD_TYPES.ADDREPZIP].BASE}],
   requestOpen: false,
   zipCode: '00000',
   stateDistrict: 'NA 0',
@@ -20,7 +20,6 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
-  var { cardsTypes, cardsDatas } = state;
   var dataAssign = {};
   switch (action.type) {
   case ACTIONS.RESET:
@@ -46,8 +45,10 @@ export default function reducer(state = initialState, action) {
   case ACTIONS.ENTERED_ZIP_RESPONSE:
     dataAssign.requestOpen = false;
     dataAssign.backendResponse = action.data;
+    var oldCard = state.cards[findCardsByType(state.cards, CARD_TYPES.ADDREPZIP)];
+    dataAssign.cards = updateCardData(state.cards, oldCard, action.data);
     if (Object.keys(action.data).length == 0) {
-      [dataAssign.cardsTypes, dataAssign.cardsDatas] = replaceOrAddCardByType(cardsTypes, cardsDatas, CARD_TYPES.ZIPENTER, CARD_TYPES.ZIPERROR, {});
+      dataAssign.cards = updateCardModifier(dataAssign.cards, oldCard, CARD_MODIFIERS[CARD_TYPES.ADDREPZIP].ZIPERROR);
       dataAssign.zipCode = '00000';
     }
     else if (Object.keys(action.data).length == 1) {
@@ -56,36 +57,45 @@ export default function reducer(state = initialState, action) {
         dataAssign.stateDistrict = key;
       }
       for (var rep of dataAssign.reps) {
-        [dataAssign.cardsTypes, dataAssign.cardsDatas] = replaceOrAddCardByData(cardsTypes, cardsDatas, rep, CARD_TYPES.REP, rep);
+        var newCard = {type: CARD_TYPES.REP, data: rep, modifier: CARD_MODIFIERS[CARD_TYPES.REP].BASE};
+        dataAssign.cards = addCard(dataAssign.cards, newCard);
       }
-      [dataAssign.cardsTypes, dataAssign.cardsDatas] = removeCard(cardsTypes, cardsDatas, CARD_TYPES.ZIPENTER, undefined);
+      oldCard = dataAssign.cards[findCardsByType(dataAssign.cards, CARD_TYPES.ADDREPZIP)];
+      dataAssign.cards = removeCard(dataAssign.cards, oldCard);
     }
     else {
-      [dataAssign.cardsTypes, dataAssign.cardsDatas] = replaceOrAddCardByType(cardsTypes, cardsDatas, CARD_TYPES.ZIPENTER, CARD_TYPES.ZIPSELECT, dataAssign.backendResponse);
+      dataAssign.cards = updateCardModifier(dataAssign.cards, oldCard, CARD_MODIFIERS[CARD_TYPES.ADDREPZIP].ZIPSELECT);
     }
     break;
   case ACTIONS.ZIP_ERROR:
     dataAssign.zipCode = '00000';
-    [dataAssign.cardsTypes, dataAssign.cardsDatas] = replaceOrAddCardByType(cardsTypes, cardsDatas, CARD_TYPES.ZIPERROR, CARD_TYPES.ZIPENTER, {});
+    var oldCard = state.cards[findCardsByType(state.cards, CARD_TYPES.ADDREPZIP)];
+    dataAssign.cards = updateCardModifier(state.cards, oldCard, CARD_MODIFIERS[CARD_TYPES.ADDREPZIP].BASE);
     break;
   case ACTIONS.DISPLAY_SELECTED_REPS:
     var reps = state.backendResponse[action.data];
     dataAssign.stateDistrict = action.data;
     dataAssign.reps = reps;
     for (var rep of dataAssign.reps) {
-      [dataAssign.cardsTypes, dataAssign.cardsDatas] = replaceOrAddCardByData(cardsTypes, cardsDatas, rep, CARD_TYPES.REP, rep);
+      var newCard = {type: CARD_TYPES.REP, data: rep, modifier: CARD_MODIFIERS[CARD_TYPES.REP].BASE};
+      dataAssign.cards = addCard(state.cards, newCard);
     }
-    [dataAssign.cardsTypes, dataAssign.cardsDatas] = removeCard(cardsTypes, cardsDatas, CARD_TYPES.ZIPSELECT, undefined);
+    var oldCard = dataAssign.cards[findCardsByType(dataAssign.cards, CARD_TYPES.ADDREPZIP)];
+    dataAssign.cards = removeCard(dataAssign.cards, oldCard);
     break;
   case ACTIONS.REMOVED_CARD:
-    [dataAssign.cardsTypes, dataAssign.cardsDatas] = removeCard(cardsTypes, cardsDatas, action.data.oldCardType, action.data.oldCardData);
+    dataAssign.cards = removeCard(state.cards, action.data.oldCard);
+    break;
+  case ACTIONS.UPDATED_CARD_MODIFIER:
+    dataAssign.cards = updateCardModifier(state.cards, action.data.oldCard, action.data.newCardModifier);
     break;
   case ACTIONS.ADDED_CARD:
-    [dataAssign.cardsTypes, dataAssign.cardsDatas] = addCard(cardsTypes, cardsDatas, action.data.newCardType, action.data.newCardData);
+    // {type: action.data.newCardType, data: action.data.newCardData, modifier: CARD_MODIFIERS[inputCardType].BASE},
+    dataAssign.cards = addCard(state.cards, action.data.newCard);
     break;
-  case ACTIONS.REPLACED_CARD:
-    [dataAssign.cardsTypes, dataAssign.cardsDatas] = replaceCard(cardsTypes, cardsDatas, action.data.oldCardType, action.data.oldCardData, action.data.newCardType, action.data.newCardData);
-    break;
+  // case ACTIONS.REPLACED_CARD:
+  //   [dataAssign.cardsList] = replaceCard(cardsList, action.data.oldCard, action.data.newCard);
+  //   break;
   }
   return assign({}, state, dataAssign);
 }

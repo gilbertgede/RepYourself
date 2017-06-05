@@ -1,97 +1,85 @@
-import { ACTIONS, CARD_TYPES, }     from '../constants/Constants';
-import equal                        from 'deep-equal';
+import { ACTIONS, CARD_TYPES, CARD_MODIFIERS, }     from '../constants/Constants';
+import equal                                        from 'deep-equal';
 
 
-function keepOneCard(typeList, dataList) {
-  if (typeList.length == 0) {
-    typeList.splice(0, 0, CARD_TYPES.ZIPENTER);
-    dataList.splice(0, 0, {});
+function keepOneCard(cardList) {
+  if (cardList.length == 0) {
+    cardList.splice(0, 0, {type: CARD_TYPES.ADDREPZIP, data: {}, modifier: CARD_MODIFIERS[CARD_TYPES.ADDREPZIP].BASE});
   }
-  return [typeList.slice(0), dataList.slice(0)];
+  return cardList.slice(0);
 }
 
-export function addCard(typeList, dataList, inputCardType, inputCardData) {
-  switch (inputCardType) {
-  case CARD_TYPES.ZIPENTER:
-  case CARD_TYPES.ZIPERROR:
-  case CARD_TYPES.ZIPSELECT:
-    if (typeList[0] != CARD_TYPES.ZIPENTER && typeList[0] != CARD_TYPES.ZIPERROR && typeList[0] != CARD_TYPES.ZIPSELECT) {
-      typeList.splice(0, 0, inputCardType);
-      dataList.splice(0, 0, inputCardData);
+export function addCard(cardList, newCard) {
+  switch (newCard.type) {
+  case CARD_TYPES.ADDREPZIP:
+    if (cardList[0].type != newCard.type) {
+      cardList.splice(0, 0, newCard);
     }
     break;
   case CARD_TYPES.REP:
-    typeList.splice(1, 0, inputCardType);
-    dataList.splice(1, 0, inputCardData);
-    break;
-  case CARD_TYPES.ABOUT:
-    typeList.push(inputCardType);
-    dataList.push(inputCardData);
+    var datas = cardList.map(function(obj) { return obj.data; });
+    var canAddCard = true;
+    for (var i=0; i<datas.length; i++) {
+      if (equal(newCard.data, datas[i])) {
+        canAddCard = false;
+      }
+    }
+    if (canAddCard) {
+      cardList.splice(1, 0, newCard);
+    }
     break;
   default:
     break;
   }
-  return keepOneCard(typeList, dataList);
+  return keepOneCard(cardList);
 }
 
-export function removeCard(typeList, dataList, removalCardType=undefined, removalCardData=undefined) {
+export function removeCard(cardList, removalCard) {
   var removalIndices = [];
-  for (var i=0; i<typeList.length; i++) {
-    if (removalCardType == undefined || equal(removalCardType, typeList[i])) {
-      if (removalCardData == undefined || equal(removalCardData, dataList[i])) {
-        removalIndices.splice(0, 0, i);
-      }
+  for (var i=0; i<cardList.length; i++) {
+    if (equal(removalCard, cardList[i])) {
+      removalIndices.splice(0, 0, i);
     }
   }
   for (var i of removalIndices) {
-    typeList.splice(i, 1);
-    dataList.splice(i, 1);
+    cardList.splice(i, 1);
   }
-  return keepOneCard(typeList, dataList);
+  return keepOneCard(cardList);
 }
 
-export function replaceCard(typeList, dataList, oldCardType, oldCardData, newCardType, newCardData) {
-  var replaced = false;
-  for (var i=0; i<typeList.length; i++) {
-    if (equal(oldCardType, typeList[i]) && equal(oldCardData, dataList[i])) {
-      typeList[i] = newCardType;
-      dataList[i] = newCardData;
-      replaced = true;
+export function replaceCard(cardList, oldCard, newCard) {
+  for (var i=0; i<cardList.length; i++) {
+    if (equal(cardList[i], oldCard)) {
+      cardList[i] = newCard;
     }
   }
-  return keepOneCard(typeList, dataList);
+  return keepOneCard(cardList);
 }
 
-export function replaceOrAddCardByType(typeList, dataList, oldCardType, newCardType, newCardData) {
-  var replaced = false;
-  for (var i=0; i<typeList.length; i++) {
-    if (equal(oldCardType, typeList[i])) {
-      typeList[i] = newCardType;
-      dataList[i] = newCardData;
-      replaced = true;
+export function updateCardData(cardList, oldCard, newCardData) {
+  for (var i=0; i<cardList.length; i++) {
+    if (equal(cardList[i], oldCard)) {
+      cardList[i].data = newCardData;
     }
   }
-  if (!replaced) {
-    return addCard(typeList, dataList, newCardType, newCardData);
-  }
-  else {
-    return keepOneCard(typeList, dataList);
-  }
+  return keepOneCard(cardList);
 }
 
-export function replaceOrAddCardByData(typeList, dataList, oldCardData, newCardType, newCardData) {
-  var replaced = false;
-  for (var i=0; i<dataList.length; i++) {
-    if (equal(oldCardData, dataList[i])) {
-      typeList[i] = newCardType;
-      dataList[i] = newCardData;
-      replaced = true;
+export function updateCardModifier(cardList, oldCard, newCardModifier) {
+  for (var i=0; i<cardList.length; i++) {
+    if (equal(cardList[i], oldCard)) {
+      cardList[i].modifier = newCardModifier;
     }
   }
-  if (!replaced) {
-    return addCard(typeList, dataList, newCardType, newCardData);
+  return keepOneCard(cardList);
+}
+
+export function findCardsByType(cardList, cardType) {
+  var retArray = [];
+  for (var i=0; i<cardList.length; i++) {
+    if (equal(cardList[i].type, cardType)) {
+      retArray.push(i);
+    }
   }
-  else {
-    return keepOneCard(typeList, dataList);
-  }
+  return retArray;
 }
