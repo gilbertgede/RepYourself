@@ -1,33 +1,42 @@
-export const ACTIONS = { RESET: 0,
-                         ENTERED_ZIP_START: 1,
-                         ENTERED_ZIP_RESPONSE: 2,
-                         ZIP_ERROR: 3,
-                         DISPLAY_SELECTED_REPS: 4,
-                         ADDED_CARD: 5,
-                         REMOVED_CARD: 6,
-                        //  REPLACED_CARD: 7,
-                         UPDATED_CARD_MODIFIER: 8,
-                         ADDED_USER_ID: 9,
-                         ADDED_PARENT_ID: 10,
-                       };
+import { generateEnumObject, } from '../utils/utils'
 
-export const CARD_TYPES = { ADDREPZIP: 0,
-                            REP: 1,
-                            LOADING: 2,
-                          };
 
-export const CARD_MODIFIERS = {};
-CARD_MODIFIERS[CARD_TYPES.ADDREPZIP] = { BASE: 0,
-                                         ZIPSELECT: 1,
-                                         ZIPERROR: 2,
-                                       };
-CARD_MODIFIERS[CARD_TYPES.REP] = { BASE: 0,
-                                   DETAIL: 1,
-                                 };
-CARD_MODIFIERS[CARD_TYPES.LOADING] = { BASE: 0,
-                                     };
+const actionsArray = [
+  'RESET',
+  'ZIP_REQUEST_START',
+  'ZIP_REQUEST_RESPONSE',
+  'ADDED_USER_ID',
+  'ADDED_PARENT_ID',
+]
+const uiActionsArray = [
+  'ZIP_RESET',
+  'ZIP_MULTI_SELECT',
+  'SELECT_VISIBLE_PAGE',
+]
 
-export const CONTACT_TYPES = { CALL: 0,
-                               TWEET: 1,
-                               FACEBOOK: 2,
-                             };
+export const ACTIONS = generateEnumObject(actionsArray, uiActionsArray)
+
+const zipDataStatesArray = [
+  "NONE", // ZIP_RESET
+  "REQUEST_OPEN", // ZIP_REQUEST_START
+  "RESOLVED", // ZIP_REQUEST_RESPONSE
+  "MULTI", // ZIP_REQUEST_RESPONSE
+  "MULTI_RESOLVED", // ZIP_MULTI_SELECT
+  "ERROR", // ZIP_REQUEST_RESPONSE
+]
+
+export const ZIP_DATA_STATE = generateEnumObject(zipDataStatesArray)
+
+const contactTypesArray = [
+  "CALL",
+  "TWEET",
+  "FACEBOOK",
+]
+
+export const CONTACT_TYPES = generateEnumObject(contactTypesArray)
+
+export const VISIBLE_PAGES = {
+  REPS: 0,
+  FEED: 1,  
+  ABOUT: 2,
+}

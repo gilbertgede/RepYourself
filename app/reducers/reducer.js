@@ -1,101 +1,77 @@
-import clone                                              from 'clone';
-import assign                                             from 'object-assign';
-import { REHYDRATE, }                                     from 'redux-persist/constants'
-import { ACTIONS, CARD_TYPES, CARD_MODIFIERS, }           from '../constants/Constants';
-import { addCard, removeCard, replaceCard,
-         updateCardData, updateCardModifier,
-         findCardsByType, }                               from './cardHelpers';
+import assign from 'object-assign'
+import { REHYDRATE, } from 'redux-persist/constants'
+
+import { ACTIONS, VISIBLE_PAGES, ZIP_DATA_STATE, } from '../constants/Constants'
 
 
 const initialState = {
-  cards: [{type: CARD_TYPES.ADDREPZIP, data: {}, modifier: CARD_MODIFIERS[CARD_TYPES.ADDREPZIP].BASE}],
-  requestOpen: false,
-  zipCode: '00000',
+  zipCode: '',
+  zipDataState: ZIP_DATA_STATE.NONE,
+  backendResponse: {},
   stateDistrict: 'NA 0',
   reps: [],
-  detailReps: [],
-  backendResponse: {},
+  visiblePage: VISIBLE_PAGES.ABOUT,
   userID: '',
   parentID: '',
-};
+}
 
 export default function reducer(state = initialState, action) {
-  var dataAssign = {};
+  let dataAssign = {}
   switch (action.type) {
   case ACTIONS.RESET:
-    return initialState;
+    return initialState
   case REHYDRATE:
-    var incoming = action.payload;
+    let incoming = action.payload
     if (!incoming) {
-      break;
+      break
     }
-    delete incoming.parentID;
-    dataAssign = incoming;
-    break;
+    delete incoming.parentID
+    dataAssign = incoming
+    break
   case ACTIONS.ADDED_USER_ID:
-    dataAssign.userID = action.data;
-    break;
+    dataAssign.userID = action.data
+    break
   case ACTIONS.ADDED_PARENT_ID:
-    dataAssign.parentID = action.data;
-    break;
-  case ACTIONS.ENTERED_ZIP_START:
-    dataAssign.zipCode = action.data;
-    dataAssign.requestOpen = true;
-    break;
-  case ACTIONS.ENTERED_ZIP_RESPONSE:
-    dataAssign.requestOpen = false;
-    dataAssign.backendResponse = action.data;
-    var oldCard = state.cards[findCardsByType(state.cards, CARD_TYPES.ADDREPZIP)];
-    dataAssign.cards = updateCardData(state.cards, oldCard, action.data);
+    dataAssign.parentID = action.data
+    break
+  case ACTIONS.SELECT_VISIBLE_PAGE:
+    dataAssign.visiblePage = action.data
+    break
+  case ACTIONS.ZIP_REQUEST_START:
+    // ASSERT zipDataState = NONE
+    dataAssign.zipCode = action.data
+    dataAssign.zipDataState = ZIP_DATA_STATE.REQUEST_OPEN
+    break
+  case ACTIONS.ZIP_REQUEST_RESPONSE:
+    // ASSERT zipDataState = REQUEST_OPEN
+    dataAssign.backendResponse = action.data
     if (Object.keys(action.data).length == 0) {
-      dataAssign.cards = updateCardModifier(dataAssign.cards, oldCard, CARD_MODIFIERS[CARD_TYPES.ADDREPZIP].ZIPERROR);
-      dataAssign.zipCode = '00000';
+      dataAssign.zipDataState = ZIP_DATA_STATE.ERROR
     }
     else if (Object.keys(action.data).length == 1) {
-      for (var key in action.data) {
-        dataAssign.reps = action.data[key];
-        dataAssign.stateDistrict = key;
+      for (let key in action.data) {
+        dataAssign.reps = action.data[key]
+        dataAssign.stateDistrict = key
       }
-      for (var rep of dataAssign.reps) {
-        var newCard = {type: CARD_TYPES.REP, data: rep, modifier: CARD_MODIFIERS[CARD_TYPES.REP].BASE};
-        dataAssign.cards = addCard(dataAssign.cards, newCard);
-      }
-      oldCard = dataAssign.cards[findCardsByType(dataAssign.cards, CARD_TYPES.ADDREPZIP)];
-      dataAssign.cards = removeCard(dataAssign.cards, oldCard);
+      dataAssign.zipDataState = ZIP_DATA_STATE.RESOLVED
+      dataAssign.visiblePage = VISIBLE_PAGES.REPS
     }
     else {
-      dataAssign.cards = updateCardModifier(dataAssign.cards, oldCard, CARD_MODIFIERS[CARD_TYPES.ADDREPZIP].ZIPSELECT);
+      dataAssign.zipDataState = ZIP_DATA_STATE.MULTI
     }
-    break;
-  case ACTIONS.ZIP_ERROR:
-    dataAssign.zipCode = '00000';
-    var oldCard = state.cards[findCardsByType(state.cards, CARD_TYPES.ADDREPZIP)];
-    dataAssign.cards = updateCardModifier(state.cards, oldCard, CARD_MODIFIERS[CARD_TYPES.ADDREPZIP].BASE);
-    break;
-  case ACTIONS.DISPLAY_SELECTED_REPS:
-    var reps = state.backendResponse[action.data];
-    dataAssign.stateDistrict = action.data;
-    dataAssign.reps = reps;
-    for (var rep of dataAssign.reps) {
-      var newCard = {type: CARD_TYPES.REP, data: rep, modifier: CARD_MODIFIERS[CARD_TYPES.REP].BASE};
-      dataAssign.cards = addCard(state.cards, newCard);
-    }
-    var oldCard = dataAssign.cards[findCardsByType(dataAssign.cards, CARD_TYPES.ADDREPZIP)];
-    dataAssign.cards = removeCard(dataAssign.cards, oldCard);
-    break;
-  case ACTIONS.REMOVED_CARD:
-    dataAssign.cards = removeCard(state.cards, action.data.oldCard);
-    break;
-  case ACTIONS.UPDATED_CARD_MODIFIER:
-    dataAssign.cards = updateCardModifier(state.cards, action.data.oldCard, action.data.newCardModifier);
-    break;
-  case ACTIONS.ADDED_CARD:
-    // {type: action.data.newCardType, data: action.data.newCardData, modifier: CARD_MODIFIERS[inputCardType].BASE},
-    dataAssign.cards = addCard(state.cards, action.data.newCard);
-    break;
-  // case ACTIONS.REPLACED_CARD:
-  //   [dataAssign.cardsList] = replaceCard(cardsList, action.data.oldCard, action.data.newCard);
-  //   break;
+    break
+  case ACTIONS.ZIP_MULTI_SELECT:
+    // ASSERT zipDataState = MULTI
+    dataAssign.zipDataState = ZIP_DATA_STATE.MULTI_RESOLVED
+    dataAssign.reps = state.backendResponse[action.data]
+    dataAssign.visiblePage = VISIBLE_PAGES.REPS
+    break
+  case ACTIONS.ZIP_RESET:
+    // ASSERT zipDataState = ERROR
+    dataAssign.zipCode = ''
+    dataAssign.zipDataState = ZIP_DATA_STATE.NONE
+    dataAssign.reps = []
+    break
   }
-  return assign({}, state, dataAssign);
+  return assign({}, state, dataAssign)
 }

@@ -56,8 +56,4 @@ web/public/
 secrets.js
 
 # native files (until they're finished)
-android/
-app/native/
-index.android.js
-ios/
-python/
+dist/
